@@ -1,6 +1,8 @@
 # 🎨 Painting Stoner
 
-Painting Stoner is a simple tool for optimizing projection aided painting. I.e. when you use a real-life projector to project a digital image on your real-life canvas for real-life painting, whether you're learning perspectives or just want to take a shortcut though time. Its power lies in two features: 
+Painting Stoner is a simple tool for optimizing projection aided painting. I.e. when you use a real-life projector to project a digital image on your real-life canvas for real-life painting, whether you're learning perspectives or just want to take a shortcut though time. 
+
+Its power lies in two features: 
 1. Perspective free transformation of image. This enables you to keystone the image to your canvas despite the projector position or what kind of keystoning features it has. Optional guidelines are present for more accurate transform positioning.
 2. In addition to basic opacity control, this includes an animated auto-fading of image with individual on-screen settings for fade in time, fade out time, on-screen time and off-screen time.
 
