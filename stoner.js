@@ -1,28 +1,31 @@
-var container = $("#container");
-var img = $(".img");
-var pts = $(".pt");
-var IMG_WIDTH = 800;
-var IMG_HEIGHT = 800;
+var container = $('#container');
+var img = $('.img');
+var pts = $('.pt');
+var IMG_WIDTH = 600;
+var IMG_HEIGHT = 600;
+var transform;
 
-var transform = new PerspectiveTransform(img[0], IMG_WIDTH, IMG_HEIGHT, true);
-var tl = pts.filter(".tl").css({
-    left : transform.topLeft.x,
-    top : transform.topLeft.y
-});
-var tr = pts.filter(".tr").css({
-    left : transform.topRight.x,
-    top : transform.topRight.y
-});
-var bl = pts.filter(".bl").css({
-    left : transform.bottomLeft.x,
-    top : transform.bottomLeft.y
-});
-var br = pts.filter(".br").css({
-    left : transform.bottomRight.x,
-    top : transform.bottomRight.y
-});
-var target;
-var targetPoint;
+function initFreeTransform(){
+    transform = new PerspectiveTransform(img[0], IMG_WIDTH, IMG_HEIGHT, true);
+    var tl = pts.filter(".tl").css({
+        left : transform.topLeft.x,
+        top : transform.topLeft.y
+    });
+    var tr = pts.filter(".tr").css({
+        left : transform.topRight.x,
+        top : transform.topRight.y
+    });
+    var bl = pts.filter(".bl").css({
+        left : transform.bottomLeft.x,
+        top : transform.bottomLeft.y
+    });
+    var br = pts.filter(".br").css({
+        left : transform.bottomRight.x,
+        top : transform.bottomRight.y
+    });
+    var target;
+    var targetPoint;
+}
 
 function onMouseMove(e) {
     targetPoint.x = e.pageX - container.offset().left;// - 20;
@@ -135,11 +138,11 @@ $(document).ready(function(){
 
     $('#show_grid').change(function(){
         if($(this).is(':checked')){
-            $('#gridi').animate({'opacity': 1}, spd);
+            $('.gridi').animate({'opacity': 1}, spd);
             $(fimg).css('border', '1px dashed rgba(0,0,0,0.8)');
             $(fimg).css('outline', '2px dashed rgba(255,0,0,0.8)');
         } else {
-            $('#gridi').animate({'opacity': 0}, spd);
+            $('.gridi').animate({'opacity': 0}, spd);
             $(fimg).css('border', 0);
             $(fimg).css('outline', 0);
         }
@@ -167,5 +170,17 @@ $(document).ready(function(){
             xchange = false;
         }
     });
+
+    setTimeout(function(){
+        var imgw = $('#theimg').width();
+        var imgh = $('#theimg').height();
+        $('.img').width(imgw);
+        $('.img').height(imgh);
+        IMG_WIDTH = imgw;
+        IMG_HEIGHT = imgh;
+        initFreeTransform();
+    }, 50);
+
+
 
 });
