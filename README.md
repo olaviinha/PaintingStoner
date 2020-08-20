@@ -24,3 +24,6 @@ Tested only in [Google Chrome](https://chrome.google.com).
 ## Demo
 
 https://joku.asia/painting-stoner
+
+![Painting Stoner in action](https://storage.googleapis.com/olaviinha/github/ps-4fps.gif)
+(Note that the fading animation is much smoother in reality than in this 4 frames per second gif)
