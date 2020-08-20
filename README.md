@@ -11,12 +11,12 @@ Tested only in [Google Chrome](https://chrome.google.com).
 ## Howto
 1. Set up your projector to project on your canvas. Remember that this tool has excessive keystoning, so you may place your projector in a position where you normally might not – The Stoner will make up for any possible shortcomings in your projector's keystoning features.
 2. Open Painting Stoner.
-3. Click on the <i>Full screen</i> button to enter full screen mode.
-4. Click on _Change image_ and paste URL to the image you wish to paint  –or–  place your image path directly in the source code:
+3. Click on _Change image_ and paste URL to the image you wish to paint  –or–  place your image path directly in the source code:
 ```
 <!-- place your image here -->
 <img id="theimg" src="file:///Users/olavi/temp/painting-sketch.jpg"/>
 ```
+4. Click on the <i>Full screen</i> button to enter full screen mode.
 5. Drag the big red corner dots to get the image on your canvas as you wish. Easiest way to go is to crop your image to the same aspect ratio as your canvas – in this case you will simply drag the big red dots onto the corners of you canvas and you're done.
 6. Adjust opacity or animated auto on/off opacity for more optimized output.
 7. Start painting.
