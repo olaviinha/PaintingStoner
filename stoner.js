@@ -139,11 +139,9 @@ $(document).ready(function(){
     $('#show_grid').change(function(){
         if($(this).is(':checked')){
             $('.gridi').animate({'opacity': 1}, spd);
-            $(fimg).css('border', '1px dashed rgba(0,0,0,0.8)');
-            $(fimg).css('outline', '2px dashed rgba(255,0,0,0.8)');
+            $(fimg).css('outline', '2px dashed rgba(255,0,0,1)');
         } else {
             $('.gridi').animate({'opacity': 0}, spd);
-            $(fimg).css('border', 0);
             $(fimg).css('outline', 0);
         }
     });
