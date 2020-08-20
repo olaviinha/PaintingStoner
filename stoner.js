@@ -99,6 +99,13 @@ function resizeFrames(){
     IMG_HEIGHT = imgh;
 }
 
+function resizeContainer(){
+   var imgw = $('#theimg').width();
+   var imgh = $('#theimg').height();
+   $('#container').width(imgw);
+   $('#container').height(imgh);
+}
+
 $(document).ready(function(){
     fimg = '#theimg';
 
@@ -186,6 +193,10 @@ $(document).ready(function(){
         }
     });
 
+    $(this).mouseup(function(){
+        resizeContainer();
+    });
+
     setTimeout(function(){
         resizeFrames();
         initFreeTransform();
@@ -202,6 +213,7 @@ function upper(files, obj) {
             setTimeout(function(){
                 resizeFrames();
                 initFreeTransform();
+                $('#container').find('img').animate({'opacity': 1}, spd);
             }, 50);
         }
         reader.readAsDataURL(file);
@@ -213,11 +225,18 @@ $(document).ready(function () {
     obj.on('dragenter', function (e) {
         e.stopPropagation();
         e.preventDefault();
-        $(this).css('outline', '5px solid #f00');
+        $(this).css('outline', '10px solid #000');
+        $(this).find('img').animate({'opacity': 0}, spd);
     });
     obj.on('dragover', function (e) {
         e.stopPropagation();
         e.preventDefault();
+    });
+    obj.on('mouseleave', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $(this).css('outline', 'none');
+        $(this).find('img').animate({'opacity': 1}, spd);
     });
     obj.on('drop', function (e) {
         e.preventDefault();
