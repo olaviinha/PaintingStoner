@@ -136,13 +136,17 @@ $(document).ready(function(){
         }
     });
 
+    $(fimg).addClass('dashed');
+    $('.img').addClass('dotted');
     $('#show_grid').change(function(){
         if($(this).is(':checked')){
             $('.gridi').animate({'opacity': 1}, spd);
-            $(fimg).css('outline', '2px dashed rgba(255,0,0,1)');
+            $(fimg).addClass('dashed');
+            $('.img').addClass('dotted');
         } else {
             $('.gridi').animate({'opacity': 0}, spd);
-            $(fimg).css('outline', 0);
+            $(fimg).removeClass('dashed');
+            $('.img').removeClass('dotted');
         }
     });
 
