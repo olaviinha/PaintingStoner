@@ -214,7 +214,8 @@ function upper(files, obj) {
                 resizeFrames();
                 initFreeTransform();
                 $('#container').find('img').animate({'opacity': 1}, spd);
-            }, 50);
+                $('.img').css('transform', 'none');
+            }, 20);
         }
         reader.readAsDataURL(file);
     }
