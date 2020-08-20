@@ -8,6 +8,9 @@ Its power lies in **two key features**:
 
 Tested only in [Google Chrome](https://chrome.google.com).
 
+![Painting Stoner in action](https://storage.googleapis.com/olaviinha/github/ps-4fps.gif)
+(Note that the fading animation is much smoother in reality than in this 4 frames per second gif.)
+
 ## Howto
 1. Set up your projector to project on your canvas. Remember that this tool has excessive keystoning, so you may place your projector in a position where you normally might not – The Stoner will make up for any possible shortcomings in your projector's keystoning features.
 2. Open [Painting Stoner](https://joku.asia/painting-stoner).
@@ -17,9 +20,8 @@ Tested only in [Google Chrome](https://chrome.google.com).
 6. Adjust opacity or animated auto on/off opacity for more optimized output.
 7. Start painting.
 
-## Demo
+## Open in browser
 
 https://joku.asia/painting-stoner
 
-![Painting Stoner in action](https://storage.googleapis.com/olaviinha/github/ps-4fps.gif)
-(Note that the fading animation is much smoother in reality than in this 4 frames per second gif.)
+
