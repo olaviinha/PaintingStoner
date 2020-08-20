@@ -24,5 +24,3 @@ Tested only in [Google Chrome](https://chrome.google.com).
 ## Demo
 
 https://joku.asia/painting-stoner
-
-![Painting Stoner in action](https://storage.googleapis.com/olaviinha/github/painting-stoner.gif)
