@@ -14,7 +14,7 @@ Tested only in [Google Chrome](https://chrome.google.com).
 <!-- place your image here -->
 <img id="theimg" src="file:///Users/olavi/temp/painting-sketch.jpg"/>
 ```
-4. Drag the big red dots outside the corners of your canvas.
+4. Drag the big red dots right on the corners of your canvas.
 5. Adjust opacity or animated auto on/off opacity for more optimized output.
 6. Start painting.
 
