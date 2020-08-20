@@ -6,6 +6,7 @@ var IMG_HEIGHT = 600;
 var transform;
 
 function initFreeTransform(){
+    transform = '';
     transform = new PerspectiveTransform(img[0], IMG_WIDTH, IMG_HEIGHT, true);
     var tl = pts.filter(".tl").css({
         left : transform.topLeft.x,
@@ -84,6 +85,18 @@ function stopFader(fimg) {
         $(fimg).css('opacity', 1);
     }, 200);
     xplay = false;
+}
+
+function resizeFrames(){
+     $('.img').css({'width': '600px', 'height': '600px'});
+    var imgw = $('#theimg').width();
+    var imgh = $('#theimg').height();
+    $('#container').width(imgw);
+    $('#container').height(imgh);
+    $('.img').width(imgw);
+    $('.img').height(imgh);
+    IMG_WIDTH = imgw;
+    IMG_HEIGHT = imgh;
 }
 
 $(document).ready(function(){
@@ -174,15 +187,56 @@ $(document).ready(function(){
     });
 
     setTimeout(function(){
-        var imgw = $('#theimg').width();
-        var imgh = $('#theimg').height();
-        $('.img').width(imgw);
-        $('.img').height(imgh);
-        IMG_WIDTH = imgw;
-        IMG_HEIGHT = imgh;
+        resizeFrames();
         initFreeTransform();
     }, 50);
 
+});
 
+function upper(files, obj) {
+    file = files[0]
+    if (file.type.indexOf("image") == 0) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#theimg').attr('src', e.target.result);
+            setTimeout(function(){
+                resizeFrames();
+                initFreeTransform();
+            }, 50);
+        }
+        reader.readAsDataURL(file);
+    }
+}
 
+$(document).ready(function () {
+    var obj = $("#container");
+    obj.on('dragenter', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $(this).css('outline', '5px solid #f00');
+    });
+    obj.on('dragover', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    obj.on('drop', function (e) {
+        e.preventDefault();
+        var files = e.originalEvent.dataTransfer.files;
+        upper(files, obj);
+        $(this).css('outline', 'none');
+        e.originalEvent.dataTransfer.files = '';
+    });
+    $(document).on('dragenter', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    $(document).on('dragover', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    $(document).on('drop', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    
 });
