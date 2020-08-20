@@ -17,7 +17,7 @@ Tested only in [Google Chrome](https://chrome.google.com).
 <img id="theimg" src="file:///Users/olavi/temp/painting-sketch.jpg"/>
 ```
 4. Click on the <i>Full screen</i> button to enter full screen mode.
-5. Drag the big red corner dots to get the image on your canvas as you wish. Easiest way to go is to crop your image to the same aspect ratio as your canvas – in this case you will simply drag the big red dots onto the corners of you canvas and you're done.
+5. Drag the big red corner dots to get the image on your canvas as you wish. Easiest way to go is to crop your image to the same aspect ratio as your canvas (using some other tools) – in this case you will simply drag the big red dots onto the corners of you canvas and you're done.
 6. Adjust opacity or animated auto on/off opacity for more optimized output.
 7. Start painting.
 
