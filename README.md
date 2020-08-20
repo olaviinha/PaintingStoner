@@ -14,7 +14,7 @@ Tested only in [Google Chrome](https://chrome.google.com).
 ## Howto
 1. Set up your projector to project on your canvas. Remember that this tool has excessive keystoning, so you may place your projector in a position where you normally might not – The Stoner will make up for any possible shortcomings in your projector's keystoning features.
 2. Open [Painting Stoner](https://joku.asia/painting-stoner).
-3. Drag an image file from your computer and drop it on the image (Mona Lisa) to replace it. Alternatively you may click on <i>Paste image URL</i> to use an image from the interwebs.
+3. Drag any image file from your computer and drop it on the image area to replace the current image. Alternatively you may click on <i>Paste image URL</i> to use an image from the interwebs.
 4. Click on the <i>Full screen</i> button to enter full screen mode.
 5. Drag the big red corner dots to get the image on your canvas as you wish. Easiest way to go is to crop your image to the same aspect ratio as your canvas (using some other tools) – in this case you will simply drag the big red dots onto the corners of you canvas and you're done.
 6. Adjust opacity or animated auto on/off opacity for more optimized output.
