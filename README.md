@@ -22,4 +22,4 @@ Tested only in [Google Chrome](https://chrome.google.com).
 https://joku.asia/painting-stoner
 
 ![Painting Stoner in action](https://storage.googleapis.com/olaviinha/github/ps-4fps.gif)
-Screen recording vs. camera recording. Note that the fading animation is much smoother in reality than in this 4 frames per second gif.
+(Note that the fading animation is much smoother in reality than in this 4 frames per second gif.)
