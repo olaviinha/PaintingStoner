@@ -55,26 +55,26 @@ pts.mousedown(function(e) {
 });
 
 var spd = 300;
-var fade_in = 0.5;
-var fade_out = 0.5;
+var fade = 0.1;
 var fade_on = 1;
 var fade_off = 2;
 var xplay = false;
 var xfull = false;
 var xchange = false;
+var xhelp = false;
+var oparange = [0, 1];
 var fimg, fader, fadeIn;
 
 function playFader(fimg) {
-    xfade_in = fade_in * 1000;
-    xfade_out = fade_out * 1000;
+    xfade = fade * 1000;
     xfade_on = fade_on * 1000;
     xfade_off = fade_off * 1000;
     fader = setInterval(function(){
-        $(fimg).stop().animate({'opacity': 0}, xfade_out);
+        $(fimg).stop().animate({'opacity': oparange[0]}, xfade);
         fadeIn = setTimeout(function(){
-            $(fimg).stop().animate({'opacity': 1}, xfade_in);
-        }, xfade_in+xfade_off);
-    }, xfade_in+xfade_out+xfade_on+xfade_off);
+            $(fimg).stop().animate({'opacity': oparange[1]}, xfade);
+        }, xfade+xfade_off);
+    }, xfade+xfade+xfade_on+xfade_off);
     xplay = true;
 }
 
@@ -82,7 +82,7 @@ function stopFader(fimg) {
     clearInterval(fader);
     clearTimeout(fadeIn);
     setTimeout(function(){
-        $(fimg).css('opacity', 1);
+        $(fimg).css('opacity', oparange[1]);
     }, 200);
     xplay = false;
 }
@@ -99,6 +99,16 @@ function resizeFrames(){
     IMG_HEIGHT = imgh;
 }
 
+function changeImageOpacity(){
+    range = oparange;
+    if( $('.img img').css('opacity') == range[0]){
+        new_opa = range[1];
+    } else {
+        new_opa = range[0];
+    }
+    $('.img img').animate({'opacity': new_opa}, fade*1000);
+}
+
 function resizeContainer(){
    var imgw = $('#theimg').width();
    var imgh = $('#theimg').height();
@@ -108,25 +118,41 @@ function resizeContainer(){
 
 $(document).ready(function(){
     fimg = '#theimg';
+    fade = $('#fade').val();
+    fade_on = $('#fade_on').val();
+    fade_off = $('#fade_off').val();
 
     $('.opaxity').slider({
         min: 0, 
         max: 1, 
         step: 0.01,
         value: 1,
+        animate: 'fast',
         slide: function(e, ui) {
             opacity = ui.value;
             $(fimg).css('opacity', opacity);
         }
     });
 
+    $('.opaxityrange').slider({
+        min: 0, 
+        max: 1, 
+        step: 0.01,
+        values: oparange,
+        animate: 'fast',
+        range: true,
+        slide: function(e, ui) {
+            oparange = ui.values;
+            // $(fimg).css('opacity', opacity);
+        }
+    });
+
     $('.controls input').bind('keyup', function(){
-        fade_in = $('#fade_in').val();
-        fade_out = $('#fade_out').val();
+        fade = $('#fade').val();
         fade_on = $('#fade_on').val();
         fade_off = $('#fade_off').val();
         if(xplay == true){
-            stopFade(fimg);
+            stopFader(fimg);
             setTimeout(function(){
                 playFader(fimg);
             }, 100);
@@ -135,7 +161,6 @@ $(document).ready(function(){
 
     $('.toggle').click(function(){
         if(xplay==false){
-            console.log('play');
             playFader(fimg);
             $(this).html('<i class="fas fa-pause"></i>');
         } else {
@@ -193,8 +218,30 @@ $(document).ready(function(){
         }
     });
 
+    $('#wrapper').click(function(e){
+        changeImageOpacity();
+    }).find('.pt').click(function(e) {
+        return false;
+    });
+
+    $('.toggle-help').html($('.toggle-help').data('closed')).click(function(){
+        if($('.help .content').is(':visible')){
+            $('.help .content').slideUp(spd);
+            $(this).html($(this).data('closed'));
+        } else {
+            $('.help .content').slideDown(spd);
+            $(this).html($(this).data('open'));
+        }
+    });
+
     $(this).mouseup(function(){
         resizeContainer();
+    });
+
+    $(this).keyup(function(e){
+        if(e.keyCode == 32){
+            changeImageOpacity();
+        }
     });
 
     setTimeout(function(){
