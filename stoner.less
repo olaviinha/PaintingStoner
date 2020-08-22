@@ -14,6 +14,12 @@ body {
     overflow: hidden;
 }
 
+#wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
 #container {
     position: absolute;
     left: 50%;
@@ -76,9 +82,24 @@ body {
     background: rgba(7,7,7,0.5);
     padding: 10px;
     width: 130px;
-    height: 200px;
+    height: auto;
     border-bottom-left-radius: 5px;
     z-index: 9999;
+    hr {
+        display: block;
+        clear: both;
+    }
+    .help {
+        margin-top: 10px;
+        .toggle-help {
+            cursor: pointer;
+            text-decoration: underline;
+            text-align: right;
+        }
+        .content {
+            display: none;
+        }
+    }
     #image-changer {
         background: rgba(7, 7, 7, 0.5);
         text-align: center;
@@ -169,6 +190,15 @@ body {
     }
 
     .settings {
-        
+        .title {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
     }
 }
+
+.ui-slider .ui-slider-handle {
+    width: 0.6em;
+}
+
+
