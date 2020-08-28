@@ -38,16 +38,21 @@
                 <hr/>
                 <div><input type="checkbox" id="show_grid" checked /> Grid</div>
                 <div><input type="checkbox" id="show_image" checked /> Image</div>
+                <div><input type="checkbox" id="grayscale" /> Grayscale</div>
                 <hr/>
                 <div class="sliders">
+                    <div class="title">Contrast</div>
+                    <div class="contrast"></div>
+
                     <div class="title">Opacity</div>
                     <div class="opaxity"></div>
 
                     <div class="title">Opacity range</div>
                     <div class="opaxityrange"></div>
                 </div>
+                <!-- <div>Steps<input id="opacity_division" type="number" value="2" step="1" /></div> -->
 
-                <div class="title">Durations</div>
+                <div class="title">Fade durations</div>
                 <div>Fade<input id="fade" type="number" value="0.1" step="0.1" /></div>
                 <div>Img on<input id="fade_on" type="number" value="1" step="0.1"/></div>
                 <div>Img off<input id="fade_off" type=number" value="2" step="0.1"/></div>
