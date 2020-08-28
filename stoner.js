@@ -3,7 +3,7 @@ var img = $('.img');
 var pts = $('.pt');
 var IMG_WIDTH = 600;
 var IMG_HEIGHT = 600;
-var transform;
+var transform, filter;
 
 function initFreeTransform(){
     transform = '';
@@ -63,6 +63,7 @@ var xfull = false;
 var xchange = false;
 var xhelp = false;
 var oparange = [0, 1];
+var opsteps = 0;
 var fimg, fader, fadeIn;
 
 function playFader(fimg) {
@@ -100,13 +101,27 @@ function resizeFrames(){
 }
 
 function changeImageOpacity(){
-    range = oparange;
-    if( $('.img img').css('opacity') == range[0]){
-        new_opa = range[1];
+    if(opsteps<=1){
+        range = oparange;
+        if( $('.img img').css('opacity') == range[0]){
+            new_opa = range[1];
+        } else {
+            new_opa = range[0];
+        }
+        $('.img img').animate({'opacity': new_opa}, fade*1000);
     } else {
-        new_opa = range[0];
+        min = oparange[0];
+        max = oparange[1];
+        step = max/opsteps-min;
+
+        for(i=2; i <= opsteps; i++){
+            new_opa = i*step;
+            if(new_opa == step*opsteps){
+                new_opa = oparange[0];
+            }
+        }
+        $('.img img').animate({'opacity': new_opa}, fade*1000);
     }
-    $('.img img').animate({'opacity': new_opa}, fade*1000);
 }
 
 function resizeContainer(){
@@ -116,11 +131,48 @@ function resizeContainer(){
    $('#container').height(imgh);
 }
 
+function updateFilter(el, filter, val){
+    filters = $(el).css('filter').split(' ');
+    var filter_exists = false;
+    if(filters.includes('none')){
+        filters = [];
+    }
+    filters.forEach(function(xfilter, i){
+        if(xfilter.indexOf(filter) > -1){
+            filter_exists = true;
+        }
+    });
+    if(filter_exists == true){
+        filters.forEach(function(xfilter, i){
+            if(xfilter.indexOf(filter) > -1){
+                filters[i] = filter+'('+val+')';
+            }
+        });
+    } else {
+        filters.push(filter + '('+val+')');
+    }
+    $(el).css('filter', filters.join(' '));
+}
+
 $(document).ready(function(){
     fimg = '#theimg';
     fade = $('#fade').val();
     fade_on = $('#fade_on').val();
     fade_off = $('#fade_off').val();
+    //opsteps = $('#opacity_division').val();
+
+    $('.contrast').slider({
+        min: 100, 
+        max: 300, 
+        step: 1,
+        value: 100,
+        animate: 'fast',
+        slide: function(e, ui) {
+            updateFilter(fimg, 'contrast', ui.value+'%');
+            var satur = (100-ui.value/3)+50;
+            updateFilter(fimg, 'saturate', satur+'%');
+        }
+    });
 
     $('.opaxity').slider({
         min: 0, 
@@ -183,6 +235,7 @@ $(document).ready(function(){
 
     $(fimg).addClass('dashed');
     $('.img').addClass('dotted');
+
     $('#show_grid').change(function(){
         if($(this).is(':checked')){
             $('.gridi').animate({'opacity': 1}, spd);
@@ -195,11 +248,28 @@ $(document).ready(function(){
         }
     });
 
+
     $('#show_image').change(function(){
         if($(this).is(':checked')){
             $(fimg).animate({'opacity': 1}, spd);
         } else {
             $(fimg).animate({'opacity': 0}, spd);
+        }
+    });
+
+    $('#grayscale').change(function(){
+        if($(this).is(':checked')){
+            updateFilter(fimg, 'grayscale', '100%');
+        } else {
+            updateFilter(fimg, 'grayscale', '0%');
+        }
+    });
+
+    $('#high_contrast').change(function(){
+        if($(this).is(':checked')){
+            updateFilter(fimg, 'contrast', '150%');
+        } else {
+            updateFilter(fimg, 'contrast', '100%');
         }
     });
 
