@@ -161,10 +161,24 @@ $(document).ready(function(){
     fade_off = $('#fade_off').val();
     //opsteps = $('#opacity_division').val();
 
+    var bgVal = 0;
     var contrastVal = 100;
     var brightnessVal = 100;
     var grayscaleVal = 0;
     var saturVal = 100;
+
+    $('.background').slider({
+        min: 0, 
+        max: 255, 
+        step: 1,
+        value: 0,
+        animate: 'fast',
+        slide: function(e, ui) {
+            bgVal = ui.value
+            $('body').css('background', 'rgb('+bgVal+','+bgVal+','+bgVal+')');
+            $(this).parent().find('.val').html(bgVal);
+        }
+    });
 
     $('.contrast').slider({
         min: 100, 
@@ -290,15 +304,6 @@ $(document).ready(function(){
             $('.gridi').animate({'opacity': 0}, spd);
             $(fimg).removeClass('dashed');
             $('.img').removeClass('dotted');
-        }
-    });
-
-
-    $('#background').change(function(){
-        if($(this).is(':checked')){
-            $('body').css('background', '#fff');
-        } else {
-            $('body').css('background', '#000');
         }
     });
 
