@@ -7,6 +7,7 @@
 - Image box made draggable (in addition to transformable).
 - Added threshold slider.
 - Added brightness slider.
+- Added numeric value display to all sliders.
 - Added favicon.
 - Added instructions.
 - Background color, font, help box, and other minor UI improvements.
