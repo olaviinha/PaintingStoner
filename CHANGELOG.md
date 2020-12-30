@@ -5,8 +5,8 @@
 - Now accepts image data paste.
 - Now accepts image URL paste without the input field.
 - Image is now draggable (in addition to freely transformable).
-- Default background now black.
 - New checkbox control: Invert.
+- Default background now black (no backlight from projector).
 - New slider control: Backlight.
 - New slider control: Threshold.
 - New slider control: Brightness.
