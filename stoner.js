@@ -294,6 +294,14 @@ $(document).ready(function(){
     });
 
 
+    $('#background').change(function(){
+        if($(this).is(':checked')){
+            $('body').css('background', '#fff');
+        } else {
+            $('body').css('background', '#000');
+        }
+    });
+
     $('#show_image').change(function(){
         if($(this).is(':checked')){
             $(fimg).animate({'opacity': 1}, spd);
