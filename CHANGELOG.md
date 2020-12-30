@@ -1,5 +1,6 @@
-# v0.1.1
-## 2020-12-30
+# Change log
+
+## 2020-12-30 v0.1.1
 
 - Now accepts image data paste.
 - Now accepts image URL paste without the input field.
