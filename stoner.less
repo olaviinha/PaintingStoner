@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600&display=swap');
+
+@ctrl-bg: rgba(50,50,50,.8);
+@base-font: 'Source Sans Pro', sans-serif;
+
+* {
+    box-sizing: border-box;
+}
 
 html, body{
     width: 100%;
@@ -8,10 +16,14 @@ html, body{
 body {
     margin: 0;
     padding: 0;
-    background: #fff;
-    font-family: Arial, Helvetica, Verdana;
+    background: #000;
+    font-family: @base-font;
+    font-weight: 300;
     font-size: 12px;
     overflow: hidden;
+    b, strong {
+        font-weight: 600;
+    }
 }
 
 #wrapper {
@@ -28,6 +40,7 @@ body {
     margin-top: -276px;
     width: 600px;
     height: 600px;
+    cursor: move;
 }
 
 .dashed {
@@ -49,6 +62,15 @@ body {
     }
     #theimg {
 
+    }
+    .instructions {
+        position: absolute;
+        bottom: 100px;
+        left: 0;
+        width: 100%;
+        font-size: 20px;
+        color: #fff;
+        z-index: 2000;
     }
 }
 
@@ -74,52 +96,58 @@ body {
     background-position: center center;
 }
 
+.help {
+    background: @ctrl-bg;
+    padding: 20px;
+    position: absolute;
+    top: -60px;
+    right: 150px;
+    width: 400px;
+    // margin-top: 10px;
+    font-size: 14px;
+    color: #fff;
+    .toggle-help {
+        cursor: pointer;
+        text-decoration: underline;
+        text-align: right;
+    }
+    .content {
+        display: none;
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+        li {
+            margin: 5px 0 5px 20px;
+        }
+    }
+}
+
 .controls {
     position: fixed;
     top: 0;
     right: 0;
     z-index: 2;
-    background: rgba(7,7,7,0.5);
+    background: @ctrl-bg;
     padding: 10px;
     width: 130px;
     height: auto;
     border-bottom-left-radius: 5px;
     z-index: 9999;
+
     hr {
         display: block;
         clear: both;
-    }
-    .help {
-        margin-top: 10px;
-        .toggle-help {
-            cursor: pointer;
-            text-decoration: underline;
-            text-align: right;
-        }
-        .content {
-            display: none;
+        border: 0;
+        background: transparent;
+        height: 1px;
+        border-bottom: 1px solid #666;
+        margin: 10px 0;
+        &:before, &:after {
+            clear: both;
         }
     }
-    #image-changer {
-        background: rgba(7, 7, 7, 0.5);
-        text-align: center;
-        position: fixed;
-        top: -70px;
-        height: 50px;
-        padding-top: 20px;
-        width: 400px;
-        right: 200px;
-        #imgurl {
-            width: 300px;
-            height: 20px;
-            border: 1px solid #888;
-            margin: auto;
-            float: none;
-        }
-    }
-    #change_image {
-        cursor: pointer;
-    }
+
     .action-buttons {
         margin-top: 10px;
         text-align: center;
@@ -167,26 +195,31 @@ body {
         }
     }
 
-    .sliders div {
-        margin-bottom: 10px;
-    }
-
     div {
         display: block;
+        clear: both;
         color: #fff;
-        margin-bottom: 3px;
+
         input {
-            margin-left: 18px;
+            border: 0;
+            background: #fff;
+            // width: 50px;
+            // float: right;
+            font-size: 12px;
+
+            float: left;
+            width: auto;
+            margin-right: 10px;
             border-bottom: 1px solid rgba(0,0,0,0.5);
+        }
+        input[type=number], input[type=text] {
+            float: right;
+            max-width: 40px;
         }
     }
 
     input {
-        border: 0;
-        background: #fff;
-        width: 50px;
-        float: right;
-        font-size: 12px;
+
     }
 
     .settings {
@@ -195,10 +228,30 @@ body {
             margin-bottom: 4px;
         }
     }
+
+    .toggle-help {
+        margin-top: 10px;
+        text-align: right;
+        cursor: pointer;
+    }
 }
 
+.ui-slider-horizontal {
+    height: 4px;
+    background: transparent;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.ui-widget-content {
+
+}
 .ui-slider .ui-slider-handle {
-    width: 0.6em;
+    width: 0.8em;
+    height: 0.8em;
 }
 
 
