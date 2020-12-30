@@ -177,6 +177,7 @@ $(document).ready(function(){
             updateFilter(fimg, 'contrast', contrastVal+'%');
             var saturVal = (100-ui.value/3)+50;
             updateFilter(fimg, 'saturate', saturVal+'%');
+            $(this).parent().find('.val').html(contrastVal);
         }
     });
 
@@ -189,6 +190,7 @@ $(document).ready(function(){
         slide: function(e, ui) {
             brightnessVal = ui.value
             updateFilter(fimg, 'brightness', brightnessVal+'%');
+            $(this).parent().find('.val').html(brightnessVal);
         }
     });
 
@@ -199,18 +201,20 @@ $(document).ready(function(){
         value: 49,
         animate: 'fast',
         slide: function(e, ui) {
-            console.log(ui.value);
             if(ui.value > 50){
                 var brightnessVal = ui.value;
                 updateFilter(fimg, 'brightness', brightnessVal+'%');
                 updateFilter(fimg, 'grayscale', '100%');
                 updateFilter(fimg, 'contrast', '5000%');
+                $(this).parent().find('.val').html(brightnessVal);
                 
             } else {
                 updateFilter(fimg, 'brightness', '100%');
                 updateFilter(fimg, 'grayscale', grayscaleVal+'%');
                 updateFilter(fimg, 'contrast', contrastVal+'%');
+                $(this).parent().find('.val').html('');
             }
+            
         }
     });
 
@@ -223,6 +227,7 @@ $(document).ready(function(){
         slide: function(e, ui) {
             opacity = ui.value;
             $(fimg).css('opacity', opacity);
+            $(this).parent().find('.val').html(Math.round(opacity * 100) + '%');
         }
     });
 
