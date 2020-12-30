@@ -2,12 +2,17 @@
 
 ## 2020-12-30 v0.1.1
 
-- Accepts image data paste.
-- Accepts image URL paste (without input field).
-- Image box made draggable (in addition to transformable).
-- Added threshold slider.
-- Added brightness slider.
-- Added numeric value display to all sliders.
+- Now accepts image data paste.
+- Now accepts image URL paste without the input field.
+- Image is now draggable (in addition to freely transformable).
+- Default background now black.
+- New checkbox control: White background. Toggles between black and white page background.
+- New slider control: threshold.
+- New slider control: brightness.
+- Added numeric value display to each single value slider.
 - Added favicon.
 - Added instructions.
-- Background color, font, help box, toggle controls and other minor UI improvements.
+- Added show/hide toggler for the controls bar.
+- Added some further instructions.
+- Help box is now larger and easier to read.
+- New font.
