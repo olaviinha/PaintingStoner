@@ -6,8 +6,8 @@
 - Now accepts image URL paste without the input field.
 - Image is now draggable (in addition to freely transformable).
 - Default background now black.
-- New checkbox control: White background. Toggles between black and white page background.
 - New checkbox control: Invert.
+- New slider control: Background light.
 - New slider control: Threshold.
 - New slider control: Brightness.
 - Added numeric value display to each single value slider.
