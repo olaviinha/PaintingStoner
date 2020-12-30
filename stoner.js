@@ -357,6 +357,18 @@ $(document).ready(function(){
         }
     });
 
+    $('.toggle-controls').html($('.toggle-controls').data('open')).click(function(){
+        if( parseInt($('.controls').css('top')) > -50){
+            // $('.help').css('top', '-60px');
+            var cHei = $('.controls').height() - 20;
+            $('.controls').animate({'top': -cHei+'px'}, spd);
+            $('.toggle-controls').html($(this).data('closed'));
+        } else {
+            $('.controls').animate({'top': '0'}, spd);
+            $('.toggle-controls').html($(this).data('open'));
+        }
+    });
+
     $('#container').draggable();
     $('#container').draggable('disable');
 
