@@ -10,4 +10,4 @@
 - Added numeric value display to all sliders.
 - Added favicon.
 - Added instructions.
-- Background color, font, help box, and other minor UI improvements.
+- Background color, font, help box, toggle controls and other minor UI improvements.
