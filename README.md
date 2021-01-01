@@ -16,8 +16,13 @@ Tested only in [Google Chrome](https://chrome.google.com).
 (Note that the fading animation is much smoother in reality than in this 4 frames per second gif.)
 
 ## How to use
+
+**Online demo:** https://inha.asia/dmo/painting-stoner
+
+Demo has no backend support, but is otherwise fully functional.
+
 1. Set up your projector to project on your canvas. Remember that this tool has excessive keystoning, so you may place your projector in a position where you normally might not – The Stoner will make up for any possible shortcomings in your projector's keystoning features.
-2. Open [Painting Stoner](https://inha.asia/dmo/painting-stoner) (online demo has no backend support, but is otherwise fully functional).
+2. Open [Painting Stoner](https://inha.asia/dmo/painting-stoner).
 3. Drag any image file from your computer and drop it in the yellow square (yellow square will appear on page when you drag your file on the page). Alternatively you may directly paste an image or an image URL from your clipboard.
 4. Click on the <i>Full screen</i> button to enter full screen mode.
 5. Drag the big red corner dots to get the image on your canvas as you wish. Easiest way to go is to crop your image to the same aspect ratio as your canvas (using some other tools) – in this case you will simply drag the big red dots onto the corners of you canvas and you're done.
