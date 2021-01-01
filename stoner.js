@@ -1,3 +1,16 @@
+
+// This setting requires your copy of Painting Stoner to be
+// running on a web server with PHP and GIMP-GMIC installed.
+// More info: https://github.com/olaviinha/painting-stoner
+var gmicSupport = true;
+
+// Elements
+var el = {
+    img: '#theimg',
+    slidersContainer: '.sliders',
+    loader: '.loader'
+}
+
 var container = $('#container');
 var img = $('.img');
 var pts = $('.pt');
@@ -29,8 +42,8 @@ function initFreeTransform(){
 }
 
 function onMouseMove(e) {
-    targetPoint.x = e.pageX - container.offset().left;// - 20;
-    targetPoint.y = e.pageY - container.offset().top;// - 20;
+    targetPoint.x = e.pageX - container.offset().left;
+    targetPoint.y = e.pageY - container.offset().top;
     target.css({
         left : targetPoint.x,
         top : targetPoint.y
@@ -64,7 +77,7 @@ var xchange = false;
 var xhelp = false;
 var oparange = [0, 1];
 var opsteps = 0;
-var fimg, fader, fadeIn;
+var stamp, fimg, fader, fadeIn, defImg;
 
 function playFader(fimg) {
     xfade = fade * 1000;
@@ -90,8 +103,8 @@ function stopFader(fimg) {
 
 function resizeFrames(){
      $('.img').css({'width': '600px', 'height': '600px'});
-    var imgw = $('#theimg').width();
-    var imgh = $('#theimg').height();
+    var imgw = $(el.img).width();
+    var imgh = $(el.img).height();
     $('#container').width(imgw);
     $('#container').height(imgh);
     $('.img').width(imgw);
@@ -125,8 +138,8 @@ function changeImageOpacity(){
 }
 
 function resizeContainer(){
-   var imgw = $('#theimg').width();
-   var imgh = $('#theimg').height();
+   var imgw = $(el.img).width();
+   var imgh = $(el.img).height();
    $('#container').width(imgw);
    $('#container').height(imgh);
 }
@@ -154,12 +167,31 @@ function updateFilter(el, filter, val){
     $(el).css('filter', filters.join(' '));
 }
 
+
+function addSlider(name, changeImage=false){
+    code = name.replace(' ', '');
+    backendClass = 'fe';
+    if(changeImage){
+        backendClass = 'be';
+    }
+    var sliderTpl = '<div class="sldr sldr-'+code+' '+backendClass+'"><div class="title">'+name+'<span class="val"></span></div><div class="slider '+code+'"></div></div>'
+    $(el.slidersContainer).append(sliderTpl);
+}
+
+function updateVal(el, val){
+    var min = el.slider('option', 'min');
+    if(val <= min){
+        el.parent().find('.val').html('');
+    } else {
+        el.parent().find('.val').html(val);
+    }
+}
+
 $(document).ready(function(){
-    fimg = '#theimg';
+    fimg = el.img;
     fade = $('#fade').val();
     fade_on = $('#fade_on').val();
     fade_off = $('#fade_off').val();
-    //opsteps = $('#opacity_division').val();
 
     var bgVal = 0;
     var contrastVal = 100;
@@ -167,7 +199,18 @@ $(document).ready(function(){
     var grayscaleVal = 0;
     var saturVal = 100;
 
-    $('.background').slider({
+    addSlider('backlight');
+    addSlider('threshold');
+    addSlider('contrast');
+    addSlider('brightness');
+    addSlider('opacity');
+    addSlider('opacity range');
+    if(gmicSupport){
+        addSlider('posterize', true);
+        addSlider('vectorize', true);
+    }
+
+    $('.backlight').slider({
         min: 0, 
         max: 255, 
         step: 1,
@@ -176,7 +219,7 @@ $(document).ready(function(){
         slide: function(e, ui) {
             bgVal = ui.value
             $('body').css('background', 'rgb('+bgVal+','+bgVal+','+bgVal+')');
-            $(this).parent().find('.val').html(bgVal);
+            updateVal($(this), ui.value);
         }
     });
 
@@ -191,7 +234,8 @@ $(document).ready(function(){
             updateFilter(fimg, 'contrast', contrastVal+'%');
             var saturVal = (100-ui.value/3)+50;
             updateFilter(fimg, 'saturate', saturVal+'%');
-            $(this).parent().find('.val').html(contrastVal);
+            updateVal($(this));
+            updateVal($(this), ui.value);
         }
     });
 
@@ -204,7 +248,7 @@ $(document).ready(function(){
         slide: function(e, ui) {
             brightnessVal = ui.value
             updateFilter(fimg, 'brightness', brightnessVal+'%');
-            $(this).parent().find('.val').html(brightnessVal);
+            updateVal($(this), ui.value);
         }
     });
 
@@ -220,19 +264,17 @@ $(document).ready(function(){
                 updateFilter(fimg, 'brightness', brightnessVal+'%');
                 updateFilter(fimg, 'grayscale', '100%');
                 updateFilter(fimg, 'contrast', '5000%');
-                $(this).parent().find('.val').html(brightnessVal);
-                
             } else {
                 updateFilter(fimg, 'brightness', '100%');
                 updateFilter(fimg, 'grayscale', grayscaleVal+'%');
                 updateFilter(fimg, 'contrast', contrastVal+'%');
-                $(this).parent().find('.val').html('');
+                
             }
-            
+            updateVal($(this), ui.value);
         }
     });
 
-    $('.opaxity').slider({
+    $('.opacity').slider({
         min: 0, 
         max: 1, 
         step: 0.01,
@@ -241,11 +283,16 @@ $(document).ready(function(){
         slide: function(e, ui) {
             opacity = ui.value;
             $(fimg).css('opacity', opacity);
-            $(this).parent().find('.val').html(Math.round(opacity * 100) + '%');
+            
+            if(Math.round(opacity * 100) == 100){
+                $(this).parent().find('.val').html('');
+            } else {
+                $(this).parent().find('.val').html(Math.round(opacity * 100) + '%');
+            }
         }
     });
 
-    $('.opaxityrange').slider({
+    $('.opacityrange').slider({
         min: 0, 
         max: 1, 
         step: 0.01,
@@ -254,9 +301,40 @@ $(document).ready(function(){
         range: true,
         slide: function(e, ui) {
             oparange = ui.values;
-            // $(fimg).css('opacity', opacity);
         }
     });
+
+    if(gmicSupport){
+        $('.posterize').slider({
+            min: 1, 
+            max: 8, 
+            step: 1,
+            value: 8,
+            animate: 'fast',
+            slide: function(e, ui) {
+                if(ui.value == $(this).slider('option', 'max')){
+                    $(el.img).attr('src', defImg);
+                } else {
+                    $(el.img).attr('src', 'tmp/'+stamp+'_pz'+ui.value+'.jpg');
+                }
+            }
+        });
+
+        $('.vectorize').slider({
+            min: 1, 
+            max: 11, 
+            step: 1,
+            value: 11,
+            animate: 'fast',
+            slide: function(e, ui) {
+                if(ui.value == $(this).slider('option', 'max')){
+                    $(el.img).attr('src', defImg);
+                } else {
+                    $(el.img).attr('src', 'tmp/'+stamp+'_vc'+ui.value+'.jpg');
+                }
+            }
+        });
+    }
 
     $('.controls input').bind('keyup', function(){
         fade = $('#fade').val();
@@ -292,9 +370,6 @@ $(document).ready(function(){
         }
     });
 
-    $(fimg).addClass('dashed');
-    $('.img').addClass('dotted');
-
     $('#show_grid').change(function(){
         if($(this).is(':checked')){
             $('.gridi').animate({'opacity': 1}, spd);
@@ -306,15 +381,6 @@ $(document).ready(function(){
             $('.img').removeClass('dotted');
         }
     });
-
-
-    // $('#background').change(function(){
-    //     if($(this).is(':checked')){
-    //         $('body').css('background', '#fff');
-    //     } else {
-    //         $('body').css('background', '#000');
-    //     }
-    // });
 
     $('#show_image').change(function(){
         if($(this).is(':checked')){
@@ -340,10 +406,18 @@ $(document).ready(function(){
         }
     });
 
+    $('#details').change(function(){
+        if($(this).is(':checked')){
+            $(el.img).attr('src', 'tmp/'+stamp+'_fd.jpg');
+        } else {
+            $(el.img).attr('src', defImg);
+        }
+    });
+
     
 
     $('#imgurl').change(function(){
-        $('#theimg').attr('src', $(this).val());
+        $(fimg).attr('src', $(this).val());
         $('#image-changer').animate({'top': '-70px'}, spd);
     });
 
@@ -422,18 +496,15 @@ $(document).ready(function(){
 });
 
 function upper(files, obj) {
+    if(gmicSupport){
+        showLoader('Generating images. Please hold.');
+    }
     img.find('.instructions').remove();
     file = files[0]
     if (file.type.indexOf("image") == 0) {
         var reader = new FileReader();
         reader.onload = function(e) {
-            $('#theimg').attr('src', e.target.result);
-            setTimeout(function(){
-                resizeFrames();
-                initFreeTransform();
-                $('#container').find('img').animate({'opacity': 1}, spd);
-                $('.img').css('transform', 'none');
-            }, 20);
+            showInputImage(e.target.result, gmicSupport);
         }
         reader.readAsDataURL(file);
     }
@@ -473,41 +544,85 @@ function imgAsBase64(pasteEvent, callback, imageFormat){
     }
 }
 
+function showLoader(msg){
+    $(el.loader).find('.msg').html(msg);
+    $(el.loader).css('opacity', 1).show();
+}
+
+function hideLoader(){
+    $(el.loader).animate({'opacity': 0}, spd, function(){
+        $(this).hide();
+        $(this).find('.msg').html('Please hold.');
+    });
+}
+
+function preloadImages(id){
+    $('.preloader').remove();
+    $('body').append('<div class="preloader" style="position:absolute;top:-9999px;left:-9999px;"></div>')
+    $('.preloader').append('<img src="tmp/'+id+'_pz1.jpg">');
+    $('.preloader').append('<img src="tmp/'+id+'_pz2.jpg">');
+    $('.preloader').append('<img src="tmp/'+id+'_pz3.jpg">');
+    $('.preloader').append('<img src="tmp/'+id+'_pz4.jpg">');
+    $('.preloader').append('<img src="tmp/'+id+'_pz5.jpg">');
+    $('.preloader').append('<img src="tmp/'+id+'_pz6.jpg">');
+
+    $('.preloader').append('<img src="tmp/'+id+'_vc1.jpg">');
+    $('.preloader').append('<img src="tmp/'+id+'_vc2.jpg">');
+    $('.preloader').append('<img src="tmp/'+id+'_vc3.jpg">');
+    $('.preloader').append('<img src="tmp/'+id+'_vc4.jpg">');
+    $('.preloader').append('<img src="tmp/'+id+'_vc5.jpg">');
+    $('.preloader').append('<img src="tmp/'+id+'_vc6.jpg">');
+    $('.preloader').append('<img src="tmp/'+id+'_vc7.jpg">');
+    $('.preloader').append('<img src="tmp/'+id+'_vc8.jpg">');
+    $('.preloader').append('<img src="tmp/'+id+'_vc9.jpg">');
+    $('.preloader').append('<img src="tmp/'+id+'_vc10.jpg">');
+}
+
 function isValidUrl(url) {
     return /^(https?|s?ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
 }
 
-window.addEventListener('paste', function(e){
-    img.find('.instructions').remove();
-    var clipboardData = e.clipboardData || window.clipboardData;
-    var pastedData = clipboardData.getData('Text');
-    if(isValidUrl(pastedData)){
-        pastedUrl = pastedData;
-        $('#theimg').attr('src', pastedUrl);
-        setTimeout(function(){
-            resizeFrames();
-            initFreeTransform();
-            $('#container').find('img').animate({'opacity': 1}, spd);
-            $('.img').css('transform', 'none');
-        }, 20);
-    } else {
-        $.each(clipboardData.items, function (i, item) {
-            if (item.type.indexOf('image') !== -1) {
-                imgAsBase64(e, function(imageDataBase64){
-                    $('#theimg').attr('src', imageDataBase64);
-                    setTimeout(function(){
-                        resizeFrames();
-                        initFreeTransform();
-                        $('#container').find('img').animate({'opacity': 1}, spd);
-                        $('.img').css('transform', 'none');
-                    }, 20);
-                });
+function fixTransformableFrame(delay) {
+    setTimeout(function(){
+        resizeFrames();
+        initFreeTransform();
+        $('#container').find('img').animate({'opacity': 1}, spd);
+        $('.img').css('transform', 'none');
+        hideLoader();
+    }, delay);
+}
+
+function showInputImage(imageData, gmic, isUrl=false){
+    if(gmic){
+        $.ajax({
+            type: 'POST',
+            url: 'gmic.php',
+            async: false,
+            data: {
+                'action': 'generate',
+                'isUrl': isUrl,
+                'data': imageData
+            },
+            fail: function(resp){
+                console.log('FAIL', resp);
+            },
+            success: function(resp){
+                stamp = resp;
+                defImg = 'tmp/'+resp+'.jpg';
+                $(el.img).attr('src', defImg);
+                preloadImages(resp);
+                fixTransformableFrame(2000);
+                $('.be').show();
             }
         });
+    } else {
+        $(el.img).attr('src', imageData);
+        fixTransformableFrame(20);
     }
-});
+}
 
-$(document).ready(function () {
+function initEvents(){
+
     var obj = $("#container");
     obj.on('dragenter', function (e) {
         e.stopPropagation();
@@ -544,4 +659,30 @@ $(document).ready(function () {
         e.stopPropagation();
         e.preventDefault();
     });
+
+    window.addEventListener('paste', function(e){
+        if(gmicSupport){
+            showLoader('Generating images. Please hold.');
+        }
+        img.find('.instructions').remove();
+        var clipboardData = e.clipboardData || window.clipboardData;
+        var pastedData = clipboardData.getData('Text');
+        if(isValidUrl(pastedData)){
+            showInputImage(pastedData, gmicSupport, true);
+        } else {
+            $.each(clipboardData.items, function (i, item) {
+                if (item.type.indexOf('image') !== -1) {
+                    imgAsBase64(e, function(imageDataBase64){
+                        if(imageDataBase64){
+                            showInputImage(imageDataBase64, gmicSupport);
+                        }
+                    });
+                }
+            });
+        }
+    });
+}
+
+$(document).ready(function () {
+    initEvents();
 });
