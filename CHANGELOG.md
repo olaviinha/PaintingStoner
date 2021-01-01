@@ -1,5 +1,12 @@
 # Change log
 
+## 2021-01-01 v0.1.2
+
+- Now optionally supports Gimp-G'MIC image processing on server-side.
+- New checkbox control: Details (visible only with backend support)
+- New slider control: Posterize (visible only with backend support)
+- New slider control: Vectorize (visible only with backend support)
+
 ## 2020-12-30 v0.1.1
 
 - Now accepts image data paste.
