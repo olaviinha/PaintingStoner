@@ -44,7 +44,7 @@ Backend support will provide a few additional controls based on server-side imag
 
 ### Example installation
 
-1. Install all prerequisites on your server. Installation procedure depends on your server setup, but for Apache2 running on Ubuntu, it should go something like this:
+1. Install all prerequisites on your server. Installation procedure depends on your server setup, but for Apache2 running on Ubuntu, it should go _something like this_:
 
 ```
 # Install PHP
@@ -58,7 +58,7 @@ sudo apt install gmic
 
 2. Place all the files of this repository on that server.
 
-3. Grant PHP write permission to `tmp` directory. It is used to store processed images temporarily:
+3. Grant PHP write permission to `tmp` directory (used to store processed images temporarily):
 
 ```
 chown -R www-data:www-data /var/www/WHATEVER-PATH-TO/painting-stoner/tmp
