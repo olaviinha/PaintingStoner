@@ -2,7 +2,7 @@
 // This setting requires your copy of Painting Stoner to be
 // running on a web server with PHP and GIMP-GMIC installed.
 // More info: https://github.com/olaviinha/painting-stoner
-var gmicSupport = true;
+var gmicSupport = false
 
 // Elements
 var el = {
