@@ -62,7 +62,7 @@ sudo service apache2 restart
 ```
 ```
 # Grant PHP write permission to tmp dir (used to store processed images temporarily)
-chown -R www-data:www-data /var/www/WHATEVER-PATH-TO/painting-stoner/tmp
+sudo chown -R www-data:www-data /var/www/WHATEVER-PATH-TO/painting-stoner/tmp
 ```
 
 Lastly, open `stoner.js` in a text editor and change `var gmicSupport` to `true`:
