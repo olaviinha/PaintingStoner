@@ -10,8 +10,6 @@
         <div id="wrapper">
             <div id="container">
                 <div class="img">
-
-                    <!-- place your image here -->
                     <div class="instructions">
                         Drag image here from your computer.<br><br>
                         –or–<br><br>
@@ -19,7 +17,6 @@
                         or image URL.
                     </div>
                     <img id="theimg" src="https://upload.wikimedia.org/wikipedia/commons/2/25/Da_Vinci%27s_Mona_Lisa_with_original_colors_approximation.jpg"/>
-                    
                     <div class="gridi"></div>
                 </div>
                 <div class="pt tl"></div>
@@ -41,46 +38,15 @@
                 
                 <div class="checkboxes">
                     <div><input type="checkbox" id="show_image" checked /> Image</div>
-                    <div><input type="checkbox" id="show_grid" checked /> Grid</div>
+                    <div class="be"><input type="checkbox" id="details" /> Details</div>
+                    <div><input type="checkbox" id="show_grid" /> Grid</div>
                     <div><input type="checkbox" id="grayscale" /> Grayscale</div>
                     <div><input type="checkbox" id="invert" /> Invert</div>
                 </div>
 
                 <hr>
                 
-                <div class="sliders">
-
-                    <div class="sldr">
-                        <div class="title">Backlight <span class="val"></span></div>
-                        <div class="background"></div>
-                    </div>
-
-                    <div class="sldr">
-                        <div class="title">Threshold <span class="val"></span></div>
-                        <div class="threshold"></div>
-                    </div>
-
-                    <div class="sldr">
-                        <div class="title">Contrast <span class="val"></span></div>
-                        <div class="contrast"></div>
-                    </div>
-
-                    <div class="sldr">
-                        <div class="title">Brightness <span class="val"></span></div>
-                        <div class="brightness"></div>
-                    </div>
-
-                    <div class="sldr">
-                        <div class="title">Opacity <span class="val"></span></div>
-                        <div class="opaxity"></div>
-                    </div>
-
-                    <div class="sldr">
-                        <div class="title">Opacity range</div>
-                        <div class="opaxityrange"></div>
-                    </div>
-                </div>
-                <!-- <div>Steps<input id="opacity_division" type="number" value="2" step="1" /></div> -->
+                <div class="sliders"></div>
 
                 <hr>
 
@@ -135,12 +101,20 @@
             <div class="toggle-help" data-open="Got it!" data-closed="Help"></div>
         </div>
 
+        <div class="loader">
+            <div class="content">
+                <div class="anim"></div>
+                <div class="msg">Please hold.</div>
+            </div>
+        </div>
+
         <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
         <link rel="stylesheet/less" type="text/css" href="stoner.less" />
         <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.0.2/less.min.js" ></script>
+
         <script src="persform.js"></script>
         <script src="stoner.js"></script>
 
