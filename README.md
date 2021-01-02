@@ -17,11 +17,14 @@ Painting Stoner's power lies in three key features:
 
 Tested only in [Google Chrome](https://chrome.google.com).
 
-## How to use
-
-**Online demo:** https://inha.asia/dmo/painting-stoner
+## Online demo
 
 Demo has no backend support, but is otherwise fully functional.
+
+https://inha.asia/dmo/painting-stoner
+
+
+## How to use
 
 1. Set up your projector to project on your canvas. Remember that this tool has excessive keystoning, so you may place your projector in a position where you normally might not – The Stoner will make up for any possible shortcomings in your projector's keystoning features.
 2. Open [Painting Stoner](https://inha.asia/dmo/painting-stoner).
