@@ -34,20 +34,22 @@ https://inha.asia/dmo/painting-stoner
 6. Adjust image and opacity settings to whatever you find most convenient for the situation at hand.
 7. Start painting.
 
-## Setup without backend support
+## Setup
+
+### ...without backend support:
 
 Place all the files of this repository on a server and you're done.
 
-## Setup with backend support
+### ...with backend support:
 
 Backend support will provide a few additional controls based on server-side image processing.
 
-### Prerequisites
+#### Prerequisites
 - PHP
 - Gimp-G'MIC
 - G'MIC
 
-### Example installation
+#### Example installation
 
 Place all the files of this repository on a server and install the prerequisites. Installation procedure depends on your server setup, but for Apache2 running on Ubuntu, it should go _something like this_:
 
