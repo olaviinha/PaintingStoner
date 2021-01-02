@@ -2,7 +2,7 @@
 // This setting requires your copy of Painting Stoner to be
 // running on a web server with PHP and GIMP-GMIC installed.
 // More info: https://github.com/olaviinha/painting-stoner
-var gmicSupport = false
+var gmicSupport = true;
 
 // Elements
 var el = {
@@ -77,7 +77,19 @@ var xchange = false;
 var xhelp = false;
 var oparange = [0, 1];
 var opsteps = 0;
+var bgVal = 'rgb(0,0,0)';
+var cursorSize = 64;
 var stamp, fimg, fader, fadeIn, defImg;
+
+function customCursor(color=bgVal, size=cursorSize){
+    half = Math.round(size/2);
+    var curUrl = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="'+color+'" width="'+size+'" height="'+size+'"><circle cx="'+half+'" cy="'+half+'" r="'+half+'"/></svg>';
+    $('#container').css({'cursor': 'url(\''+curUrl+'\') '+half+' '+half+', default'});
+}
+
+function resetCursor(){
+    $('#container').css({'cursor': 'move'});
+}
 
 function playFader(fimg) {
     xfade = fade * 1000;
@@ -193,18 +205,19 @@ $(document).ready(function(){
     fade_on = $('#fade_on').val();
     fade_off = $('#fade_off').val();
 
-    var bgVal = 0;
     var contrastVal = 100;
     var brightnessVal = 100;
     var grayscaleVal = 0;
     var saturVal = 100;
 
+    addSlider('opacity');
+    addSlider('opacity range');
     addSlider('backlight');
+    addSlider('cursor size');
     addSlider('threshold');
     addSlider('contrast');
     addSlider('brightness');
-    addSlider('opacity');
-    addSlider('opacity range');
+    
     if(gmicSupport){
         addSlider('posterize', true);
         addSlider('vectorize', true);
@@ -217,8 +230,9 @@ $(document).ready(function(){
         value: 0,
         animate: 'fast',
         slide: function(e, ui) {
-            bgVal = ui.value
-            $('body').css('background', 'rgb('+bgVal+','+bgVal+','+bgVal+')');
+            bgVal = ui.value;
+            bgVal = 'rgb('+bgVal+','+bgVal+','+bgVal+')';
+            $('body').css('background', bgVal);
             updateVal($(this), ui.value);
         }
     });
@@ -230,7 +244,7 @@ $(document).ready(function(){
         value: 100,
         animate: 'fast',
         slide: function(e, ui) {
-            contrastVal = ui.value
+            contrastVal = ui.value;
             updateFilter(fimg, 'contrast', contrastVal+'%');
             var saturVal = (100-ui.value/3)+50;
             updateFilter(fimg, 'saturate', saturVal+'%');
@@ -246,8 +260,21 @@ $(document).ready(function(){
         value: 100,
         animate: 'fast',
         slide: function(e, ui) {
-            brightnessVal = ui.value
+            brightnessVal = ui.value;
             updateFilter(fimg, 'brightness', brightnessVal+'%');
+            updateVal($(this), ui.value);
+        }
+    });
+
+    $('.cursorsize').slider({
+        min: 5, 
+        max: 128,
+        step: 1,
+        value: 64,
+        animate: 'fast',
+        slide: function(e, ui) {
+            cursorSize = ui.value;
+            customCursor(bgVal, cursorSize);
             updateVal($(this), ui.value);
         }
     });
@@ -470,8 +497,14 @@ $(document).ready(function(){
 
     $('.img').mouseenter(function(){
         $('#container').draggable('enable');
+        customCursor(bgVal, cursorSize);
+    }).mousedown(function(){
+        resetCursor();
+    }).mouseup(function(){
+        customCursor(bgVal, cursorSize);
     }).mouseleave(function(){
         $('#container').draggable('disable');
+        resetCursor();
     });
     
 
