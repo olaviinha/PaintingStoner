@@ -16,7 +16,7 @@ Painting Stoner's power lies in three key features:
 
 Tested only in [Google Chrome](https://chrome.google.com).
 
-![Painting Stoner in action](https://storage.googleapis.com/olaviinha/github/painting-stoner/backendadjs.gif)
+![Painting Stoner in action](https://storage.googleapis.com/olaviinha/github/painting-stoner/backendadjs2.gif)
 
 ## Online demo
 
