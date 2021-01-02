@@ -44,7 +44,7 @@ Place all the files of this repository on a server and you're done.
 
 ### ...with backend support:
 
-Backend support will provide a few additional controls based on server-side image processing.
+Place all the files of this repository on a server and install the prerequisites. Backend support will provide a few additional controls based on server-side image processing. 
 
 #### Prerequisites
 - PHP
@@ -53,7 +53,7 @@ Backend support will provide a few additional controls based on server-side imag
 
 #### Example installation
 
-Place all the files of this repository on a server and install the prerequisites. Installation procedure depends on your server setup, but for Apache2 running on Ubuntu, it should go _something like this_:
+Installation procedure depends on your server setup, but for Apache2 running on Ubuntu, it should go _something like this_:
 
 ```
 # Install PHP
