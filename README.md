@@ -1,5 +1,8 @@
 # Painting Stoner
 
+![Painting Stoner in action](https://storage.googleapis.com/olaviinha/github/ps-4fps.gif)
+(Note that the fading animation is much smoother in reality than in this 4 frames per second gif.)
+
 Painting Stoner is a simple browser-based tool for optimizing projector guided painting. I.e. when you use a real-life projector to project a digital image on your real-life canvas for real-life painting, whether you use projecting for making a rough sketch, learning perspectives or even attempting to paint the projected image.
 
 I developed this tool for my own purposes after purchasing a $50 projector for painting. All features are built around that cheap-ass projector's shortcomings as well as otherwise making many aspects of the process more convenient.
@@ -11,9 +14,6 @@ Painting Stoner's power lies in three key features:
 
 
 Tested only in [Google Chrome](https://chrome.google.com).
-
-![Painting Stoner in action](https://storage.googleapis.com/olaviinha/github/ps-4fps.gif)
-(Note that the fading animation is much smoother in reality than in this 4 frames per second gif.)
 
 ## How to use
 
