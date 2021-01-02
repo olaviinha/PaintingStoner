@@ -2,7 +2,7 @@
 
 ## 2021-01-02 v0.1.2
 
-- Now optionally supports Gimp-G'MIC image processing on server-side.
+- Support for server-side Gimp-G'MIC image processing (requires backend support).
 - New checkbox control: Details (visible only with backend support)
 - New slider control: Posterize (visible only with backend support)
 - New slider control: Vectorize (visible only with backend support)
