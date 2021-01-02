@@ -6,8 +6,8 @@
 - New checkbox control: Details (visible only with backend support)
 - New slider control: Posterize (visible only with backend support)
 - New slider control: Vectorize (visible only with backend support)
-- New slider control: Cursor size
-- Disable projecting small portion of the image by cursor.
+- New slider control: Cursor size.
+- Cursor creates a round hole in the projection.
 
 ## 2020-12-30 v0.1.1
 
