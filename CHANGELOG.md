@@ -26,3 +26,4 @@
 - Added some further instructions.
 - Help box is now larger and easier to read.
 - New font.
+- Graphic UI improvements.
