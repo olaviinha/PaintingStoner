@@ -14,8 +14,9 @@ Painting Stoner's power lies in three key features:
 2. **Extended opacity control with animated auto-fading.** In addition to basic opacity slider, the Stoner includes an opacity range slider where you can select two opacity values. You can easily switch between these values when necessary by clicking anywhere on page or hitting spacebar on your keyboard. You may also enable animated auto-fading between these opacity values according to duration settings (separately specified image fade time, image on-screen time and image off-screen time). This way you will see both the end result without projection and the overlaying projection on regular (fast or slow) intervals while you paint. Additionally you may adjust cursor size and hide any small portion of the projection by cursor.
 3. **Multiple relevant image adjustment controls** to get the projected image closer to what best suits your needs at any moment. Controls include projection backlight, grayscale, invert colours, threshold, contrast and brightness. With optional [backend setup](#setup-with-backend-support), you can get a few more controls based on server-side image processing: details, posterize and vectorize.
 
-
 Tested only in [Google Chrome](https://chrome.google.com).
+
+![Painting Stoner in action](https://storage.googleapis.com/olaviinha/github/painting-stoner/backendadjs.gif)
 
 ## Online demo
 
