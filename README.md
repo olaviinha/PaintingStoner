@@ -54,8 +54,7 @@ sudo apt install php libapache2-mod-php
 ```
 ```
 # Install Gimp-G'MIC & G'MIC: 
-sudo apt install gimp-gmic
-sudo apt install gmic
+sudo apt install gimp-gmic gmic
 ``` 
 
 ```
