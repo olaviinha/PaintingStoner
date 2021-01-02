@@ -26,7 +26,7 @@ Demo has no backend support, but is otherwise fully functional.
 3. Drag any image file from your computer and drop it in the yellow square (yellow square will appear on page when you drag your file on the page). Alternatively you may directly paste an image or an image URL from your clipboard.
 4. Click on the <i>Full screen</i> button to enter full screen mode.
 5. Drag the big red corner dots to get the image on your canvas as you wish. Easiest way to go is to crop your image to the same aspect ratio as your canvas (using some other tools) – in this case you will simply drag the big red dots onto the corners of you canvas and you're done.
-6. Adjust image effect and opacity settings to whatever you find most convenient for the situation at hand.
+6. Adjust image and opacity settings to whatever you find most convenient for the situation at hand.
 7. Start painting.
 
 ## Setup without backend support
