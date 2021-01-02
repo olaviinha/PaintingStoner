@@ -1,11 +1,13 @@
 # Change log
 
-## 2021-01-01 v0.1.2
+## 2021-01-02 v0.1.2
 
 - Now optionally supports Gimp-G'MIC image processing on server-side.
 - New checkbox control: Details (visible only with backend support)
 - New slider control: Posterize (visible only with backend support)
 - New slider control: Vectorize (visible only with backend support)
+- New slider control: Cursor size
+- Disable projecting small portion of the image by cursor.
 
 ## 2020-12-30 v0.1.1
 
