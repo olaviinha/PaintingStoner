@@ -63,6 +63,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'generate') {
     // Restore details
     exec('gmic -input ' . $imgpath . ' -fx_freaky_details 2,10,1,11,0,32,0 -output tmp/' . $img_id . '_fd.jpg');
 
+    // Outlines
+    exec('gmic -input ' . $imgpath . ' -edges 24% -normalize 0,255 -output tmp/' . $img_id . '_ol1.jpg');
+    exec('gmic -input ' . $imgpath . ' -edges 18% -normalize 0,255 -output tmp/' . $img_id . '_ol2.jpg');
+    exec('gmic -input ' . $imgpath . ' -edges 14% -normalize 0,255 -output tmp/' . $img_id . '_ol3.jpg');
+    exec('gmic -input ' . $imgpath . ' -edges 9% -normalize 0,255 -output tmp/' . $img_id . '_ol4.jpg');
+    exec('gmic -input ' . $imgpath . ' -edges 6% -normalize 0,255 -output tmp/' . $img_id . '_ol5.jpg');
+    exec('gmic -input ' . $imgpath . ' -edges 4% -normalize 0,255 -output tmp/' . $img_id . '_ol6.jpg');
+    exec('gmic -input ' . $imgpath . ' -edges 2% -normalize 0,255 -output tmp/' . $img_id . '_ol7.jpg');
+    exec('gmic -input ' . $imgpath . ' -edges 1% -normalize 0,255 -output tmp/' . $img_id . '_ol8.jpg');
+
     echo $img_id;
 }
 
