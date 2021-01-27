@@ -1,11 +1,15 @@
 # Change log
 
+## 2021-01-27 v0.1.3
+
+- New slider control: Outlines (visible only with backend support).
+
 ## 2021-01-02 v0.1.2
 
 - Support for server-side Gimp-G'MIC image processing.
-- New checkbox control: Details (visible only with backend support)
-- New slider control: Posterize (visible only with backend support)
-- New slider control: Vectorize (visible only with backend support)
+- New checkbox control: Details (visible only with backend support).
+- New slider control: Posterize (visible only with backend support).
+- New slider control: Vectorize (visible only with backend support).
 - New slider control: Cursor size.
 - Mouse cursor over the image creates a round hole in the projection.
 - Updated grid.
