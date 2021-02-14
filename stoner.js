@@ -132,12 +132,12 @@ function resizeFrames(){
 function changeImageOpacity(){
     if(opsteps<=1){
         range = oparange;
-        if( $('.img img').css('opacity') == range[0]){
+        if( $(el.imgcont).css('opacity') == range[0]){
             new_opa = range[1];
         } else {
             new_opa = range[0];
         }
-        $('.img img').animate({'opacity': new_opa}, fade*1000);
+        $(el.imgcont).animate({'opacity': new_opa}, fade*1000);
     } else {
         min = oparange[0];
         max = oparange[1];
@@ -149,7 +149,7 @@ function changeImageOpacity(){
                 new_opa = oparange[0];
             }
         }
-        $('.img img').animate({'opacity': new_opa}, fade*1000);
+        $(el.imgcont).animate({'opacity': new_opa}, fade*1000);
     }
 }
 
@@ -221,7 +221,7 @@ $(document).ready(function(){
 
     var blendMenu = '<div class="blendmode"><div class="title">Filter blend mode</div><div><input type="radio" name="blend" value="normal" checked id="blendNormal"/> <label for="blendNormal">Normal</label></div><div><input type="radio" name="blend" value="darken" id="blendDarken"/> <label for="blendDarken">Darken</label></div><div><input type="radio" name="blend" value="lighten" id="blendLighten"/> <label for="blendLighten">Lighten</label></div></div>'
 
-    addSlider('image opacity', false, el.settingSlidersContainer);
+    addSlider('opacity', false, el.settingSlidersContainer);
     addSlider('opacity range', false, el.settingSlidersContainer);
     addSlider('backlight', false, el.settingSlidersContainer);
     addSlider('cursor size', false, el.settingSlidersContainer);    
@@ -241,7 +241,7 @@ $(document).ready(function(){
         addSlider('outlines', true, el.filterSlidersContainer);
     }
 
-    $('.imageopacity').slider({
+    $('.opacity').slider({
         min: 0, 
         max: 1, 
         step: 0.01,
@@ -449,19 +449,19 @@ $(document).ready(function(){
         fade_on = $('#fade_on').val();
         fade_off = $('#fade_off').val();
         if(xplay == true){
-            stopFader(fimg);
+            stopFader(el.imgcont);
             setTimeout(function(){
-                playFader(fimg);
+                playFader(el.imgcont);
             }, 100);
         }
     });
 
     $('.toggle').click(function(){
         if(xplay==false){
-            playFader(fimg);
+            playFader(el.imgcont);
             $(this).html('<i class="fas fa-pause"></i>');
         } else {
-            stopFader(fimg);
+            stopFader(el.imgcont);
             $(this).html('<i class="fas fa-play"></i>');
         }
     });
@@ -481,20 +481,20 @@ $(document).ready(function(){
     $('#show_grid').change(function(){
         if($(this).is(':checked')){
             $('.gridi').animate({'opacity': 1}, spd);
-            $(fimg).addClass('dashed');
+            $(el.imgcont).addClass('dashed');
             $('.img').addClass('dotted');
         } else {
             $('.gridi').animate({'opacity': 0}, spd);
-            $(fimg).removeClass('dashed');
+            $(el.imgcont).removeClass('dashed');
             $('.img').removeClass('dotted');
         }
     });
 
     $('#show_image').change(function(){
         if($(this).is(':checked')){
-            $(fimg).animate({'opacity': 1}, spd);
+            $(el.imgcont).animate({'opacity': 1}, spd);
         } else {
-            $(fimg).animate({'opacity': 0}, spd);
+            $(el.imgcont).animate({'opacity': 0}, spd);
         }
     });
 
@@ -599,7 +599,6 @@ $(document).ready(function(){
         $('#container').draggable('disable');
         resetCursor();
     });
-    
 
     $('.pt').mouseenter(function(e){
         $('#container').draggable('disable');
