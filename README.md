@@ -58,17 +58,10 @@ Installation procedure depends on your server setup, but for Apache2 running on 
 ```
 # Install PHP
 sudo apt install php libapache2-mod-php
-```
-```
 # Install Gimp-G'MIC & G'MIC: 
 sudo apt install gimp-gmic gmic
-``` 
-
-```
 # Restart Apache
 sudo service apache2 restart
-```
-```
 # Grant PHP write permission to tmp dir (used to store processed images temporarily)
 sudo chown -R www-data:www-data /var/www/WHATEVER-PATH-TO/painting-stoner/tmp
 ```
