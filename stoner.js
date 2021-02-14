@@ -724,7 +724,6 @@ function isValidUrl(url) {
 
 function fixTransformableFrame(delay) {
     setTimeout(function(){
-        console.log('fix transform frame');
         resizeFrames();
         initFreeTransform();
         $('#container').find('img').animate({'opacity': 1}, spd);
