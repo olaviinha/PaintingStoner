@@ -762,6 +762,7 @@ function showInputImage(imageData, gmic, isUrl=false){
         });
     } else {
         $(el.img).attr('src', imageData);
+        $(el.fimg).attr('src', imageData);
         fixTransformableFrame(20);
     }
 }
