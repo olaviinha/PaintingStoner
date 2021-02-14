@@ -16,7 +16,10 @@
                         Hit cmd-v / ctrl-v to paste image data<br>
                         or image URL.
                     </div>
-                    <img id="theimg" src="https://upload.wikimedia.org/wikipedia/commons/2/25/Da_Vinci%27s_Mona_Lisa_with_original_colors_approximation.jpg"/>
+                    <div id="bothimages">
+                        <img id="original" src="https://upload.wikimedia.org/wikipedia/commons/2/25/Da_Vinci%27s_Mona_Lisa_with_original_colors_approximation.jpg"/>
+                        <img id="filtered" src="https://upload.wikimedia.org/wikipedia/commons/2/25/Da_Vinci%27s_Mona_Lisa_with_original_colors_approximation.jpg"/>
+                    </div>
                     <div class="gridi"></div>
                 </div>
                 <div class="pt tl"></div>
@@ -27,36 +30,38 @@
         </div>
         <div class="controls">
             <div class="settings">
-                <div class="action-buttons">
-                    <div class="big">
-                        <div class="b fullscreen"><i class="fas fa-expand"></i></div>
-                        <div class="b toggle"><i class="fas fa-play"></i></div>
+                <div class="left col">
+                    <div class="action-buttons">
+                        <div class="big">
+                            <div class="b fullscreen"><i class="fas fa-expand"></i></div>
+                            <div class="b toggle"><i class="fas fa-play"></i></div>
+                        </div>
                     </div>
+
+                    <div class="title">Fade durations</div>
+                    <div>Fade<input id="fade" type="number" value="0.1" step="0.1" /></div>
+                    <div>Img on<input id="fade_on" type="number" value="1" step="0.1"/></div>
+                    <div>Img off<input id="fade_off" type="number" value="2" step="0.1"/></div>
+                    
+                    <hr>
+
+                    <div class="checkboxes">
+                        <div><input type="checkbox" id="show_image" checked /> Image</div>
+                        <div class="be"><input type="checkbox" id="details" /> Details</div>
+                        <div><input type="checkbox" id="show_grid" /> Grid</div>
+                        <div><input type="checkbox" id="grayscale" /> Grayscale</div>
+                        <div><input type="checkbox" id="invert" /> Invert</div>
+                    </div>
+
+                    <hr>
+
+                    <div class="setting sliders"></div>
+
                 </div>
-
-                <hr>
-                
-                <div class="checkboxes">
-                    <div><input type="checkbox" id="show_image" checked /> Image</div>
-                    <div class="be"><input type="checkbox" id="details" /> Details</div>
-                    <div><input type="checkbox" id="show_grid" /> Grid</div>
-                    <div><input type="checkbox" id="grayscale" /> Grayscale</div>
-                    <div><input type="checkbox" id="invert" /> Invert</div>
+                <div class="right col">
+                    <div class="filter sliders"></div>
                 </div>
-
                 <hr>
-                
-                <div class="sliders"></div>
-
-                <hr>
-
-                <div class="title">Fade durations</div>
-                <div>Fade<input id="fade" type="number" value="0.1" step="0.1" /></div>
-                <div>Img on<input id="fade_on" type="number" value="1" step="0.1"/></div>
-                <div>Img off<input id="fade_off" type="number" value="2" step="0.1"/></div>
-
-                <hr>
-
                 <div class="togglers">
                     <div class="btn toggle-help" data-open="Got it!" data-closed="Help"></div>
                     <div class="btn toggle-controls" data-open="Hide" data-closed="Show"></div>
