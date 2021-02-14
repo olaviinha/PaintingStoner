@@ -1,5 +1,12 @@
 # Change log
 
+## 2021-02-14 v0.1.4
+
+- Restore last generated images upon pageload when backend supported.
+- New radio select control: Filter blend mode (normal, darken, lighten)
+- New slider control: Bg image opacity, usable when 'darken' or 'lighten' blend mode selected.
+- New slider control: Filter opacity.
+
 ## 2021-01-27 v0.1.3
 
 - New slider control: Outlines (visible only with backend support).
