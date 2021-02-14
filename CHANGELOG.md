@@ -6,6 +6,7 @@
 - New radio select control: Filter blend mode (normal, darken, lighten)
 - New slider control: Bg image opacity, usable when 'darken' or 'lighten' blend mode selected.
 - New slider control: Filter opacity.
+- Better drag corners.
 
 ## 2021-01-27 v0.1.3
 
