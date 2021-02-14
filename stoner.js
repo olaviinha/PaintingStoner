@@ -2,18 +2,22 @@
 // This setting requires your copy of Painting Stoner to be
 // running on a web server with PHP and GIMP-GMIC installed.
 // More info: https://github.com/olaviinha/painting-stoner
-var gmicSupport = false;
+var gmicSupport = true;
 
 // Elements
 var el = {
-    img: '#theimg',
-    slidersContainer: '.sliders',
+    img: '#original',
+    fimg: '#filtered',
+    imgcont: '#bothimages',
+    settingSlidersContainer: '.setting.sliders',
+    filterSlidersContainer: '.filter.sliders',
     loader: '.loader'
 }
 
 var container = $('#container');
 var img = $('.img');
 var pts = $('.pt');
+var loadWait = 3000;
 var IMG_WIDTH = 600;
 var IMG_HEIGHT = 600;
 var transform, filter;
@@ -180,14 +184,14 @@ function updateFilter(el, filter, val){
 }
 
 
-function addSlider(name, changeImage=false){
-    code = name.replace(' ', '');
+function addSlider(name, changeImage=false, container=el.filterSlidersContainer){
+    code = name.replaceAll(' ', '');
     backendClass = 'fe';
     if(changeImage){
         backendClass = 'be';
     }
     var sliderTpl = '<div class="sldr sldr-'+code+' '+backendClass+'"><div class="title">'+name+'<span class="val"></span></div><div class="slider '+code+'"></div></div>'
-    $(el.slidersContainer).append(sliderTpl);
+    $(container).append(sliderTpl);
 }
 
 function updateVal(el, val){
@@ -204,7 +208,8 @@ function resetSlider(el){
 }
 
 $(document).ready(function(){
-    fimg = el.img;
+    // fimg = el.img;
+    fimg = el.fimg;
     fade = $('#fade').val();
     fade_on = $('#fade_on').val();
     fade_off = $('#fade_off').val();
@@ -214,19 +219,93 @@ $(document).ready(function(){
     var grayscaleVal = 0;
     var saturVal = 100;
 
-    addSlider('opacity');
-    addSlider('opacity range');
-    addSlider('backlight');
-    addSlider('cursor size');
-    addSlider('threshold');
-    addSlider('contrast');
-    addSlider('brightness');
+    var blendMenu = '<div class="blendmode"><div class="title">Blend mode</div><div><input type="radio" name="blend" value="normal" checked id="blendNormal"/> <label for="blendNormal">Normal</label></div><div><input type="radio" name="blend" value="darken" id="blendDarken"/> <label for="blendDarken">Darken</label></div><div><input type="radio" name="blend" value="lighten" id="blendLighten"/> <label for="blendLighten">Lighten</label></div></div>'
+
+    addSlider('image opacity', false, el.settingSlidersContainer);
+    addSlider('opacity range', false, el.settingSlidersContainer);
+    addSlider('backlight', false, el.settingSlidersContainer);
+    addSlider('cursor size', false, el.settingSlidersContainer);    
+
+    addSlider('filter opacity', false, el.filterSlidersContainer);
+    $(el.filterSlidersContainer).append(blendMenu);
+    addSlider('bg image opacity', false, el.filterSlidersContainer);
+    $(el.filterSlidersContainer).append('<hr>');
+
+    addSlider('threshold', false, el.filterSlidersContainer);
+    addSlider('contrast', false, el.filterSlidersContainer);
+    addSlider('brightness', false, el.filterSlidersContainer);
     
     if(gmicSupport){
-        addSlider('posterize', true);
-        addSlider('vectorize', true);
-        addSlider('outlines', true);
+        addSlider('posterize', true, el.filterSlidersContainer);
+        addSlider('vectorize', true, el.filterSlidersContainer);
+        addSlider('outlines', true, el.filterSlidersContainer);
     }
+
+    $('.imageopacity').slider({
+        min: 0, 
+        max: 1, 
+        step: 0.01,
+        value: 1,
+        animate: 'fast',
+        slide: function(e, ui) {
+            opacity = ui.value;
+            $(el.imgcont).css('opacity', opacity);
+            
+            if(Math.round(opacity * 100) == 100){
+                $(this).parent().find('.val').html('');
+            } else {
+                $(this).parent().find('.val').html(Math.round(opacity * 100) + '%');
+            }
+        }
+    });
+
+    $('.bgimageopacity').slider({
+        min: 0, 
+        max: 1, 
+        step: 0.01,
+        value: 1,
+        animate: 'fast',
+        slide: function(e, ui) {
+            opacity = ui.value;
+            $(el.img).css('opacity', opacity);
+            
+            if(Math.round(opacity * 100) == 100){
+                $(this).parent().find('.val').html('');
+            } else {
+                $(this).parent().find('.val').html(Math.round(opacity * 100) + '%');
+            }
+        }
+    });
+
+    $('.filteropacity').slider({
+        min: 0, 
+        max: 1, 
+        step: 0.01,
+        value: 1,
+        animate: 'fast',
+        slide: function(e, ui) {
+            opacity = ui.value;
+            $(fimg).css('opacity', opacity);
+            
+            if(Math.round(opacity * 100) == 100){
+                $(this).parent().find('.val').html('');
+            } else {
+                $(this).parent().find('.val').html(Math.round(opacity * 100) + '%');
+            }
+        }
+    });
+
+    $('.opacityrange').slider({
+        min: 0, 
+        max: 1, 
+        step: 0.01,
+        values: oparange,
+        animate: 'fast',
+        range: true,
+        slide: function(e, ui) {
+            oparange = ui.values;
+        }
+    });
 
     $('.backlight').slider({
         min: 0, 
@@ -306,36 +385,6 @@ $(document).ready(function(){
         }
     });
 
-    $('.opacity').slider({
-        min: 0, 
-        max: 1, 
-        step: 0.01,
-        value: 1,
-        animate: 'fast',
-        slide: function(e, ui) {
-            opacity = ui.value;
-            $(fimg).css('opacity', opacity);
-            
-            if(Math.round(opacity * 100) == 100){
-                $(this).parent().find('.val').html('');
-            } else {
-                $(this).parent().find('.val').html(Math.round(opacity * 100) + '%');
-            }
-        }
-    });
-
-    $('.opacityrange').slider({
-        min: 0, 
-        max: 1, 
-        step: 0.01,
-        values: oparange,
-        animate: 'fast',
-        range: true,
-        slide: function(e, ui) {
-            oparange = ui.values;
-        }
-    });
-
     if(gmicSupport){
         $('.posterize').slider({
             min: 1, 
@@ -349,9 +398,9 @@ $(document).ready(function(){
             },
             slide: function(e, ui) {
                 if(ui.value == $(this).slider('option', 'max')){
-                    $(el.img).attr('src', defImg);
+                    $(fimg).attr('src', defImg);
                 } else {
-                    $(el.img).attr('src', 'tmp/'+stamp+'_pz'+ui.value+'.jpg');
+                    $(fimg).attr('src', 'tmp/'+stamp+'_pz'+ui.value+'.jpg');
                 }
             }
         });
@@ -368,9 +417,9 @@ $(document).ready(function(){
             },
             slide: function(e, ui) {
                 if(ui.value == $(this).slider('option', 'max')){
-                    $(el.img).attr('src', defImg);
+                    $(fimg).attr('src', defImg);
                 } else {
-                    $(el.img).attr('src', 'tmp/'+stamp+'_vc'+ui.value+'.jpg');
+                    $(fimg).attr('src', 'tmp/'+stamp+'_vc'+ui.value+'.jpg');
                 }
             }
         });
@@ -387,9 +436,9 @@ $(document).ready(function(){
             },
             slide: function(e, ui) {
                 if(ui.value == $(this).slider('option', 'max')){
-                    $(el.img).attr('src', defImg);
+                    $(fimg).attr('src', defImg);
                 } else {
-                    $(el.img).attr('src', 'tmp/'+stamp+'_ol'+ui.value+'.jpg');
+                    $(fimg).attr('src', 'tmp/'+stamp+'_ol'+ui.value+'.jpg');
                 }
             }
         });
@@ -467,13 +516,26 @@ $(document).ready(function(){
 
     $('#details').change(function(){
         if($(this).is(':checked')){
-            $(el.img).attr('src', 'tmp/'+stamp+'_fd.jpg');
+            $(fimg).attr('src', 'tmp/'+stamp+'_fd.jpg');
         } else {
-            $(el.img).attr('src', defImg);
+            $(fimg).attr('src', defImg);
         }
     });
 
-    
+
+    $('.bgimageopacity').slider({disabled: true});
+    $('.bgimageopacity').prev().css('opacity', .5);
+    $('input[type="radio"]').change(function(){
+        var val = $(this).val();
+        $(fimg).css('mix-blend-mode', val);
+        if(val=='normal'){
+            $('.bgimageopacity').slider({disabled: true});
+            $('.bgimageopacity').prev().css('opacity', .5);
+        } else {
+            $('.bgimageopacity').slider({disabled: false});
+            $('.bgimageopacity').prev().css('opacity', 1);
+        }
+    });
 
     $('#imgurl').change(function(){
         $(fimg).attr('src', $(this).val());
@@ -514,7 +576,6 @@ $(document).ready(function(){
 
     $('.toggle-controls').html($('.toggle-controls').data('open')).click(function(){
         if( parseInt($('.controls').css('top')) > -50){
-            // $('.help').css('top', '-60px');
             var cHei = $('.controls').height() - 15;
             $('.controls').animate({'top': -cHei+'px'}, spd);
             $('.toggle-controls').html($(this).data('closed'));
@@ -623,24 +684,39 @@ function hideLoader(){
 
 function preloadImages(id){
     $('.preloader').remove();
-    $('body').append('<div class="preloader" style="position:absolute;top:-9999px;left:-9999px;"></div>')
-    $('.preloader').append('<img src="tmp/'+id+'_pz1.jpg">');
-    $('.preloader').append('<img src="tmp/'+id+'_pz2.jpg">');
-    $('.preloader').append('<img src="tmp/'+id+'_pz3.jpg">');
-    $('.preloader').append('<img src="tmp/'+id+'_pz4.jpg">');
-    $('.preloader').append('<img src="tmp/'+id+'_pz5.jpg">');
-    $('.preloader').append('<img src="tmp/'+id+'_pz6.jpg">');
+    $('body').append('<div class="preloader" style="position:absolute;top:-9999px;left:-9999px;"></div>');
+    if(prl) clearTimeout(prl);
 
-    $('.preloader').append('<img src="tmp/'+id+'_vc1.jpg">');
-    $('.preloader').append('<img src="tmp/'+id+'_vc2.jpg">');
-    $('.preloader').append('<img src="tmp/'+id+'_vc3.jpg">');
-    $('.preloader').append('<img src="tmp/'+id+'_vc4.jpg">');
-    $('.preloader').append('<img src="tmp/'+id+'_vc5.jpg">');
-    $('.preloader').append('<img src="tmp/'+id+'_vc6.jpg">');
-    $('.preloader').append('<img src="tmp/'+id+'_vc7.jpg">');
-    $('.preloader').append('<img src="tmp/'+id+'_vc8.jpg">');
-    $('.preloader').append('<img src="tmp/'+id+'_vc9.jpg">');
-    $('.preloader').append('<img src="tmp/'+id+'_vc10.jpg">');
+    var prl = setTimeout(function(){
+        $('.preloader').append('<img src="tmp/'+id+'_pz1.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_pz2.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_pz3.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_pz4.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_pz5.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_pz6.jpg">');
+
+        $('.preloader').append('<img src="tmp/'+id+'_vc1.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_vc2.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_vc3.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_vc4.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_vc5.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_vc6.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_vc7.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_vc8.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_vc9.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_vc10.jpg">');
+
+        $('.preloader').append('<img src="tmp/'+id+'_fd.jpg">');
+
+        $('.preloader').append('<img src="tmp/'+id+'_ol1.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_ol2.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_ol3.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_ol4.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_ol5.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_ol6.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_ol7.jpg">');
+        $('.preloader').append('<img src="tmp/'+id+'_ol8.jpg">');
+    }, loadWait);
 }
 
 function isValidUrl(url) {
@@ -649,6 +725,7 @@ function isValidUrl(url) {
 
 function fixTransformableFrame(delay) {
     setTimeout(function(){
+        console.log('fix transform frame');
         resizeFrames();
         initFreeTransform();
         $('#container').find('img').animate({'opacity': 1}, spd);
@@ -662,11 +739,15 @@ function showInputImage(imageData, gmic, isUrl=false){
         $.ajax({
             type: 'POST',
             url: 'gmic.php',
-            async: false,
+            // async: false,
             data: {
                 'action': 'generate',
                 'isUrl': isUrl,
                 'data': imageData
+            },
+            beforeSend: function(){
+                img.find('.instructions').remove();
+                showLoader('Generating images. This may take a few minutes.<br>Please hold.');
             },
             fail: function(resp){
                 console.log('FAIL', resp);
@@ -675,8 +756,9 @@ function showInputImage(imageData, gmic, isUrl=false){
                 stamp = resp;
                 defImg = 'tmp/'+resp+'.jpg';
                 $(el.img).attr('src', defImg);
+                $(el.fimg).attr('src', defImg);
                 preloadImages(resp);
-                fixTransformableFrame(2000);
+                fixTransformableFrame(loadWait);
                 $('.be').show();
             }
         });
@@ -725,11 +807,37 @@ function initEvents(){
         e.preventDefault();
     });
 
+    if(gmicSupport){
+        $.ajax({
+            type: 'POST',
+            url: 'gmic.php',
+            // async: false,
+            data: {
+                'action': 'list',
+                'isUrl': false
+            },
+            beforeSend: function(){
+                showLoader('Loading. Please hold.');
+            },
+            fail: function(resp){
+                console.log('FAIL', resp);
+            },
+            success: function(resp){
+                if(resp > 0){
+                    img.find('.instructions').remove();
+                    stamp = resp;
+                    defImg = 'tmp/'+resp+'.jpg';
+                    $(el.img).attr('src', defImg);
+                    $(el.fimg).attr('src', defImg);
+                    preloadImages(resp);
+                    fixTransformableFrame(loadWait);
+                    $('.be').show();
+                }
+            }
+        });
+    }
+
     window.addEventListener('paste', function(e){
-        if(gmicSupport){
-            showLoader('Generating images. Please hold.');
-        }
-        img.find('.instructions').remove();
         var clipboardData = e.clipboardData || window.clipboardData;
         var pastedData = clipboardData.getData('Text');
         if(isValidUrl(pastedData)){
