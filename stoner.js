@@ -219,7 +219,7 @@ $(document).ready(function(){
     var grayscaleVal = 0;
     var saturVal = 100;
 
-    var blendMenu = '<div class="blendmode"><div class="title">Blend mode</div><div><input type="radio" name="blend" value="normal" checked id="blendNormal"/> <label for="blendNormal">Normal</label></div><div><input type="radio" name="blend" value="darken" id="blendDarken"/> <label for="blendDarken">Darken</label></div><div><input type="radio" name="blend" value="lighten" id="blendLighten"/> <label for="blendLighten">Lighten</label></div></div>'
+    var blendMenu = '<div class="blendmode"><div class="title">Filter blend mode</div><div><input type="radio" name="blend" value="normal" checked id="blendNormal"/> <label for="blendNormal">Normal</label></div><div><input type="radio" name="blend" value="darken" id="blendDarken"/> <label for="blendDarken">Darken</label></div><div><input type="radio" name="blend" value="lighten" id="blendLighten"/> <label for="blendLighten">Lighten</label></div></div>'
 
     addSlider('image opacity', false, el.settingSlidersContainer);
     addSlider('opacity range', false, el.settingSlidersContainer);
