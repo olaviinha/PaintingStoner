@@ -2,6 +2,7 @@
 
 @ctrl-bg: rgba(50,50,50,.8);
 @base-font: 'Source Sans Pro', sans-serif;
+@transition: filter .2s ease-in-out;
 
 * {
     box-sizing: border-box;
@@ -38,7 +39,7 @@ body {
     left: 0;
     background: rgba(0,0,0,.8);
     z-index: 9999999;
-    display: none;
+    // display: none;
     .content {
         position: relative;
         top: 50%;
@@ -156,7 +157,7 @@ body {
     background: @ctrl-bg;
     padding: 20px;
     position: absolute;
-    top: -60px;
+    top: -100px;
     right: 350px;
     width: 400px;
     // margin-top: 10px;
@@ -187,7 +188,6 @@ body {
     position: fixed;
     top: 0;
     right: 0;
-    z-index: 2;
     background: @ctrl-bg;
     padding: 10px;
     height: auto;
@@ -366,4 +366,30 @@ body {
     height: 0.8em;
 }
 
+.bgpalette, .imgpalette {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    transition: @transition;
+    &.boost {
+        filter: saturate(1.2) contrast(1.2) brightness(1.2);
+    }
+    .color {
+        display: block;
+    }
+}
 
+.bgpalette {
+    z-index: -1;
+}
+
+.imgpalette {
+    width: 100%;
+}
+
+.disabled {
+    opacity: .3;
+}
