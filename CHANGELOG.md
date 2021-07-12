@@ -1,5 +1,13 @@
 # Change log
 
+## 2021-07-12 v0.1.5
+
+- Generate indicative palette when backend supported. When visible, palette is displayed in page background as well as inside projected image.
+- New checkbox control: Indicative palette (visible only with backend support).
+- New checkbox control: Boost palette (visible only with backend support).
+- Minor fix: help box position (Windows browsers displayed scrollbars when hidden).
+- Minor fix: Load timer (on some pageloads content was not displayed until refresh).
+
 ## 2021-02-14 v0.1.4
 
 - Restore last generated images upon pageload when backend supported.
