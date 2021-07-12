@@ -838,7 +838,9 @@ function getPalette(gimg) {
                     $('#c'+cid).remove();
                 });
             }
-            $('.be').show();           
+            setTimeout(function(){
+                $('.be').show();
+            }, 100);
         }
     });
 
