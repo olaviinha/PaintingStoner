@@ -20,7 +20,9 @@ var pts = $('.pt');
 var loadWait = 3000;
 var IMG_WIDTH = 600;
 var IMG_HEIGHT = 600;
-var transform, filter;
+var generate_palette = true;
+var transform, filter, win_height, win_width, palette_length;
+var spectrum = false;
 
 function initFreeTransform(){
     transform = '';
@@ -125,6 +127,11 @@ function resizeFrames(){
     $('#container').height(imgh);
     $('.img').width(imgw);
     $('.img').height(imgh);
+    var body_color_height = win_height / palette_length;
+    var img_color_height = imgh / palette_length;
+    $('.bgc').css({'height': body_color_height+'px'});
+    $('.imc').css({'height': img_color_height+'px'});
+
     IMG_WIDTH = imgw;
     IMG_HEIGHT = imgh;
 }
@@ -214,12 +221,28 @@ $(document).ready(function(){
     fade_on = $('#fade_on').val();
     fade_off = $('#fade_off').val();
 
+    win_height = $(window).height();
+    win_width = $(window).width();
+
     var contrastVal = 100;
     var brightnessVal = 100;
     var grayscaleVal = 0;
     var saturVal = 100;
 
-    var blendMenu = '<div class="blendmode"><div class="title">Filter blend mode</div><div><input type="radio" name="blend" value="normal" checked id="blendNormal"/> <label for="blendNormal">Normal</label></div><div><input type="radio" name="blend" value="darken" id="blendDarken"/> <label for="blendDarken">Darken</label></div><div><input type="radio" name="blend" value="lighten" id="blendLighten"/> <label for="blendLighten">Lighten</label></div></div>'
+    var blendMenu = `
+        <div class="blendmode">
+            <div class="title">Filter blend mode</div>
+            <div>
+                <input type="radio" name="blend" value="normal" checked id="blendNormal"/> <label for="blendNormal">Normal</label>
+            </div>
+            <div>
+                <input type="radio" name="blend" value="darken" id="blendDarken"/> <label for="blendDarken">Darken</label>
+            </div>
+            <div>
+                <input type="radio" name="blend" value="lighten" id="blendLighten"/> <label for="blendLighten">Lighten</label>
+            </div>
+        </div>
+    `;
 
     addSlider('opacity', false, el.settingSlidersContainer);
     addSlider('opacity range', false, el.settingSlidersContainer);
@@ -514,6 +537,27 @@ $(document).ready(function(){
         }
     });
 
+    $('#palette').change(function(){
+        if($(this).is(':checked')){
+            $('.bgpalette, .imgpalette').animate({'opacity': 1}, spd);
+            $('#boost').removeAttr('disabled');
+            $('#boost').parent().removeClass('disabled');
+            
+        } else {
+            $('.bgpalette, .imgpalette').animate({'opacity': 0}, spd);
+            $('#boost').attr('disabled', 'disabled');
+            $('#boost').parent().addClass('disabled');
+        }
+    });
+
+    $('#boost').change(function(){
+        if($(this).is(':checked')){
+            $('.bgpalette, .imgpalette').addClass('boost');
+        } else {
+            $('.bgpalette, .imgpalette').removeClass('boost');
+        }
+    });
+
     $('#details').change(function(){
         if($(this).is(':checked')){
             $(fimg).attr('src', 'tmp/'+stamp+'_fd.jpg');
@@ -521,7 +565,6 @@ $(document).ready(function(){
             $(fimg).attr('src', defImg);
         }
     });
-
 
     $('.bgimageopacity').slider({disabled: true});
     $('.bgimageopacity').prev().css('opacity', .5);
@@ -616,7 +659,7 @@ $(document).ready(function(){
     setTimeout(function(){
         resizeFrames();
         initFreeTransform();
-    }, 50);
+    }, 500);
 
 });
 
@@ -683,7 +726,7 @@ function hideLoader(){
 
 function preloadImages(id){
     $('.preloader').remove();
-    $('body').append('<div class="preloader" style="position:absolute;top:-9999px;left:-9999px;"></div>');
+    $('body').append('<div class="preloader" style="position:absolute;top:9999px;left:9999px;"></div>');
     if(prl) clearTimeout(prl);
 
     var prl = setTimeout(function(){
@@ -722,6 +765,85 @@ function isValidUrl(url) {
     return /^(https?|s?ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
 }
 
+function rgbToHsl(c) {
+    c = c.split(',');
+    var r = c[0]/255, g = c[1]/255, b = c[2]/255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+  
+    if(max == min) {
+      h = s = 0;
+    } else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch(max){
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      h /= 6;
+    }
+    return new Array(h * 360, s * 100, l * 100);
+}
+
+function getPalette(gimg) {
+    $.ajax({
+        type: 'POST',
+        url: 'imagesampler.php',
+        data: {
+            'img': gimg
+        },
+        beforeSend: function(){
+            
+        },
+        fail: function(resp){
+            console.log('FAIL', resp);
+        },
+        success: function(resp){
+            resp = JSON.parse(resp.replace(/(\r\n|\n|\r)/gm, ""));
+            palette_length = resp.length;
+            var body_color_height = win_height / palette_length;
+            var img_color_height = IMG_HEIGHT / palette_length;
+            
+            $('.bgpalette, .imgpalette').remove();
+            $('body').append(`<div class="bgpalette boost" style="width:`+win_width/2+`px;"></div>`);
+            img.append(`<div class="imgpalette boost" style="width:`+IMG_WIDTH/2+`px;"></div>`);
+
+            Object.keys(resp).forEach(function(key) {
+                var color = resp[key].color;
+                var cid = color.replaceAll(',', '');
+                var w = 30 + resp[key].w * .5 || 30;
+                $('.bgpalette').append(`<div id="c`+cid+`" class="bgc color" style="width:`+w+`px;height:`+body_color_height+`px;background:rgb(`+color+`);"></div>`);
+                $('.imgpalette').append(`<div id="c`+cid+`" class="imc color" style="width:`+w+`px;height:`+img_color_height+`px;background:rgb(`+color+`);"></div>`);
+            });
+
+            if(spectrum){
+                var rgbArr = [];
+                Object.keys(resp).forEach(function(key){
+                    rgbArr.push(resp[key].color);
+                });
+    
+                var sortedRgbArr = rgbArr.map(function(c, i) {
+                    return {color: rgbToHsl(c), index: i};
+                }).sort(function(c1, c2) {
+                    return c1.color[0] - c2.color[0];
+                }).map(function(data) {
+                    return rgbArr[data.index];
+                });
+                sortedRgbArr.forEach(function(color) {
+                    var cid = color.replaceAll(',', '');
+                    var w = $('#c'+cid).width();
+                    $('.bgpalette').append(`<div id="cx`+cid+`" class="bgc color" style="width:`+w+`px;height:`+color_height+`px;background:rgb(`+color+`);"></div>`);
+                    $('.imgpalette').append(`<div id="c`+cid+`" class="imc color" style="width:`+w+`px;height:`+img_color_height+`px;background:rgb(`+color+`);"></div>`);
+                    $('#c'+cid).remove();
+                });
+            }
+            $('.be').show();           
+        }
+    });
+
+}
+
 function fixTransformableFrame(delay) {
     setTimeout(function(){
         resizeFrames();
@@ -752,15 +874,17 @@ function showInputImage(imageData, gmic, isUrl=false){
             },
             success: function(resp){
                 stamp = resp;
+                resp = resp.replace(/(\r\n|\n|\r)/gm, "");
                 defImg = 'tmp/'+resp+'.jpg';
                 $(el.img).attr('src', defImg);
                 $(el.fimg).attr('src', defImg);
                 preloadImages(resp);
                 fixTransformableFrame(loadWait);
-                $('.be').show();
+                getPalette(defImg);
             }
         });
     } else {
+        img.find('.instructions').remove();
         $(el.img).attr('src', imageData);
         $(el.fimg).attr('src', imageData);
         fixTransformableFrame(20);
@@ -768,7 +892,6 @@ function showInputImage(imageData, gmic, isUrl=false){
 }
 
 function initEvents(){
-
     var obj = $("#container");
     obj.on('dragenter', function (e) {
         e.stopPropagation();
@@ -825,12 +948,14 @@ function initEvents(){
                 if(resp > 0){
                     img.find('.instructions').remove();
                     stamp = resp;
+                    resp = resp.replace(/(\r\n|\n|\r)/gm, "");
                     defImg = 'tmp/'+resp+'.jpg';
                     $(el.img).attr('src', defImg);
                     $(el.fimg).attr('src', defImg);
                     preloadImages(resp);
                     fixTransformableFrame(loadWait);
-                    $('.be').show();
+                    getPalette(defImg);
+
                 }
             }
         });
@@ -853,6 +978,10 @@ function initEvents(){
             });
         }
     });
+
+    if(!gmicSupport){
+        hideLoader();
+    }
 }
 
 $(document).ready(function () {
