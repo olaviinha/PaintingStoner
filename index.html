@@ -5,6 +5,16 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <link rel="shortcut icon" type="image/png" href="favicon.png">
         <title>Stoner</title>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+        <link rel="stylesheet/less" type="text/css" href="stoner.less" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.0.2/less.min.js" ></script>
+
+        <script src="//kit.fontawesome.com/cdac6e394b.js" crossorigin="anonymous"></script>
+
     </head>
     <body>
         <div id="wrapper">
@@ -46,11 +56,13 @@
                     <hr>
 
                     <div class="checkboxes">
-                        <div><input type="checkbox" id="show_image" checked /> Image</div>
-                        <div class="be"><input type="checkbox" id="details" /> Details</div>
-                        <div><input type="checkbox" id="show_grid" /> Grid</div>
-                        <div><input type="checkbox" id="grayscale" /> Grayscale</div>
-                        <div><input type="checkbox" id="invert" /> Invert</div>
+                        <div><input type="checkbox" id="show_image" checked /> <label for="show_image">Image</label></div>
+                        <div><input type="checkbox" id="show_grid" /> <label for="show_grid">Grid</label></div>
+                        <div><input type="checkbox" id="grayscale" /> <label for="grayscale">Grayscale</label></div>
+                        <div><input type="checkbox" id="invert" /> <label for="invert">Invert</label></div>
+                        <div class="be"><input type="checkbox" id="palette" /> <label for="palette">Indicative palette</label></div>
+                        <div class="be disabled"><input type="checkbox" id="boost" checked="checked" disabled="disabled" /> <label for="boost">Boost palette</label></div>
+                        <div class="be"><input type="checkbox" id="details" /> <label for="details">Details</label></div>
                     </div>
 
                     <hr>
@@ -120,16 +132,7 @@
             </div>
         </div>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
-        <link rel="stylesheet/less" type="text/css" href="stoner.less" />
-        <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.0.2/less.min.js" ></script>
-
         <script src="persform.js"></script>
         <script src="stoner.js"></script>
-
-        <script src="//kit.fontawesome.com/cdac6e394b.js" crossorigin="anonymous"></script>
     </body>
 </html>
