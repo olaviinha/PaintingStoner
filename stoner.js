@@ -605,7 +605,7 @@ $(document).ready(function(){
         if($('.help .content').is(':visible')){
             // $('.help').css('top', '-60px');
             $('.help .content').slideUp(spd, function(){
-                $('.help').animate({'top': '-60px'}, 50);
+                $('.help').animate({'top': '-100px'}, 50);
             });
             $('.toggle-help').html($(this).data('closed'));
         } else {
