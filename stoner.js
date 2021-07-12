@@ -789,7 +789,7 @@ function rgbToHsl(c) {
 function getPalette(gimg) {
     $.ajax({
         type: 'POST',
-        url: 'imagesampler.php',
+        url: 'palette.php',
         data: {
             'img': gimg
         },
